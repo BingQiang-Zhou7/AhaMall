@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<title>我的购物车</title>
+<link href="ec.css" rel="stylesheet" type="text/css">
+<link href="index.css" rel="stylesheet" type="text/css">
+<link href="main.css" rel="stylesheet" type="text/css">
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body class="wide sc">
+<div class="header">
+    <div class="layout">
+        <div class="left">
+            <!-- 2017-02-15-logo-start -->
+            <div class="logo"><b style="font-size: 28px">是兄弟就来砍我</b></div>
+            <!-- 2017-02-15-logo-end -->
+            
+            <div class="logo logo-word">
+                <span>我的购物车</span>
+            </div>
+        </div>
+    <div class="shortcut">
+		<div class="s-main " style="margin-top: 10px;">
+            <ul>
+                <li>
+                    <div class="s-dropdown">
+                        <div class="h h-wide" id="header-toolbar-minicart">
+                            <a href="../login/login.htm">请登录</a>
+                        </div>
+                    </div>
+                </li>
+             	<li>
+                    <div class="s-dropdown">
+                        <div class="h h-wide" id="header-toolbar-minicart">
+                            <a href="../register/register.htm">注册</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="s-dropdown">
+                        <div class="h h-wide" id="header-toolbar-minicart">
+                            <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
+                        </div>
+                        </div>
+                </li>
+                <li>
+                    <div class="s-dropdown hide">
+                        <div class="h h-wide" id="header-toolbar-minicart">
+                            <a href="https://www.vmall.com/cart?t=15265688700701526568869970" class="icon-minicart" rel="nofollow" target="blank" onclick="pushMyCartMsg()">
+                                <span>购物车(<span id="header-cart-total">0</span>)</span>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+	</div>
+</div>
+<div class="layout">
+	    <!--20170721-未登录提醒-start -->
+    <div id="login-prompt-cart" class="login-prompt" style="">您还没有登录！登录后可查看之前加入的商品
+    	<a id="top-index-loginUrl" href="../login/login.htm">登录</a>
+    </div>
+    <!--20170721-未登录提醒-end -->
+    <div class="hr-20"></div>
+<div class="sc-list">
+	<div id="cart-empty-msg" class="sc-empty hide">
+        	<span class="icon-minicart"></span>
+            <p>您的购物车里什么也没有哦~</p>
+            <a href="https://www.vmall.com">去逛逛</a>
+        </div>
+	<!--20170721-购物车-标题-start -->
+		<div class="sc-pro-title clearfix" id="shopping-cart-product-list">
+			<label><i class="icon-choose-normal icon-choose-all icon-choose" id="checkAll-top"></i>全选</label>
+			<ul class="clearfix">
+                <li>商品</li> 
+                <li>单价</li>
+                <li>数量</li>
+                <li>小计</li>
+                <li>操作</li>
+			</ul>
+		</div>
+        <!--20170721-购物车-标题-end -->
+        <form id="cart-form" autocomplete="off" method="get">
+        	<input name="state" value="1" type="hidden">
+        	<div id="cart-list"><!--product-list start-->
+        		<div class="sc-pro"><!--单品start-->
+        			<input name="skuIds" value="10086431508342" type="hidden">
+        			<input name="prdSbomCode" value="2601010038102" type="hidden">
+        			<div class="sc-pro-list clearfix" id="order-pro-10086431508342">
+        				<i class="icon-choose-normal " id="icon-choose-10086431508342" onclick="ec.shoppingCart.check(this);" >
+        				</i>
+        				<div class="sc-pro-area " id="sc-pro-area-10086431508342">
+        					<div class="sc-pro-main clearfix"><!--至灰时添加class="disabled"-->
+        							<img class="p-img" alt="荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通&nbsp;双卡双待&nbsp;高配版" src="1.jpg">
+        							<span></span>
+        						<ul>            
+        							<li>            
+        								<p class="p-name">荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通&nbsp;双卡双待&nbsp;高配版</p>                
+        								<p class="p-sku" style="display: none;">
+        									<em>版本：全网通&nbsp;6GB+64GB</em>
+        									<em>颜色：幻影蓝</em>
+        								</p>                        
+        							</li>            
+        							<li>                
+        								<div class="p-price">            
+        									<span>¥&nbsp;2599.00</span>                
+        								</div>            
+        							</li>            
+        							<li>                
+        								<div class="p-stock">
+        									<div class="p-stock-area">                    
+        										<input id="quantity-10086431508342" class="p-stock-text" value="1" data-skuid="10086431508342" data-type="1"  style="ime-mode: disabled;" type="text">
+        										<p class="p-stock-btn" id="p-stock-btn-area">
+        											<a id="pro-quantity-plus" href="javascript:;">+</a>
+        											<a id="pro-quantity-minus" href="javascript:;" class="disabled">−</a>
+        										</p>
+        									</div>          
+        								</div>
+        								</li>            
+        								<li class="p-price-total" id="p-price-total-10086431508342">¥&nbsp;2599.00
+        								</li>            
+        								<li>
+        									<a href="javascript:;" class="p-del" onclick="ec.shoppingCart.del(this , 10086431508342,1)">删除
+        									</a>
+        								</li>
+        							</ul>
+        						</div>
+        						</div>
+        					</div>
+        				</div><!-- 加价购列表--><!--单品end--><!--product-list end-->
+        			</div>
+        		</form>
+        <div id="locationForEnd"></div>
+        <div id="center_balance" class="">
+        	<div id="cart-total-area" class="sc-total-tool layout clearfix ">
+        		<div class="sc-total-control">
+        			<label><i class="icon-choose-normal icon-choose-all" id="checkAll-buttom"></i>全选</label>
+        		</div>
+        		<div class="sc-total-btn ">
+        			<a href="../toBeDevelop/toBeDevelop.htm" >立即结算</a>
+        		</div>
+        		<div class="sc-total-price">
+        			<p><label>总计：</label>
+        				<span id="sc-cartInfo-totalOriginalPrice">¥&nbsp;0.00</span>
+        			</p>
+        	</div>
+        </div>
+   </div>
+</div>
+</div>
+<div class="slogan-container">
+    <div class="slogan">
+        <p>Copyright © 2012-2018 Aha. All Rights Reserved.</p>
+    </div>
+</div>
+</body>
+</html>

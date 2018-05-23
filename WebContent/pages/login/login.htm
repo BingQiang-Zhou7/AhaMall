@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">    
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">        
+<meta name="renderer" content="webkit">        
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">               
+<meta charset="utf-8">                     
+<title>登录兄弟商城</title>        
+<link  rel="stylesheet" href="page_login3d8d4c.css">        
+<link  rel="stylesheet" href="loginpage3c96b6.css">
+<script src="Login.js"></script>
+</head>
+<body class="zh_CN" onload="load()">    
+	<div class="weui-toptips weui-toptips_error" style="display: none;">
+		<div class="weui-toptips__inner">          
+		</div>
+	</div>    
+	<div id="app" style="visibility: visible;">
+		<div id="header" class="mp-head">
+			<div class="weui-desktop-head">
+				<div class="weui-desktop-head__inner">
+					<div class="weui-desktop-layout">
+						<div class="weui-desktop-layout__side">
+							<h1 class="weui-desktop-logo">
+								是兄弟就来砍我
+							</h1>
+						</div> 
+						<div class="weui-desktop-layout__extra">
+							<div class="weui-desktop-head-helper">
+								<a href="../../pages/register/register.htm" class="weui-desktop-regist-access">立即注册</a> 
+							</div>
+						</div>
+					</div>
+				</div> 
+				<div class="banner">
+					<div class="inner wrp">
+						<div class="login_frame input_login">
+							<div class="weui-desktop-global-mod">
+								<div class="weui-desktop-global__info">
+									<h3 style="color: #e01d20;">登录</h3>
+								</div>
+							</div> <!----> 
+									<form action="/AhaMall/LoginServlet" class="login_form" method="post" onsubmit="return login()">
+										<div class="login_input_panel">
+											<div class="login_input">
+												<i class="icon_login un"></i> 
+												<div class="weui-desktop-form__input-area">
+													<span class="weui-desktop-form__input-wrp"><!----> <!----> <!----> <!----> <!----> 
+														<input name="phoneNum" placeholder="手机号" id="phoneNum"  maxlength="11" autocomplete="on" class="weui-desktop-form__input" type="text"> <!----></span> <!----> <!---->
+													</div>
+												</div> 
+												<div class="login_input">
+													<i class="icon_login pwd"></i> 
+													<div class="weui-desktop-form__input-area">
+														<span class="weui-desktop-form__input-wrp"><!----> <!----> <!----> <!----> <!----> 
+															<input name="password" placeholder="密码" id="password" maxlength="16" autocomplete="on" value="" class="weui-desktop-form__input" type="password"> <!---->
+														</span> <!----> <!---->
+													</div>
+												</div>
+											</div> 
+												<div class="login_help_panel">
+													<label class="frm_checkbox_label">
+<!--														<input class="frm_checkbox" type="checkbox">记住帐号               -->
+														<a href="../../pages/index/index.htm" class="login_forget_pwd">游客登录</a>
+													</label> 
+													<label class="frm_checkbox_label frm_tips" style="color: red;" id="Tip">
+													</label> 
+													<a href="../../pages/findPassword/findPassword.htm" class="login_forget_pwd">忘记密码</a></div> 
+													<div class="login_btn_panel">
+														<button type="submit" class="btn_login">登录</button>
+													</div>
+												</form>
+											</div> 
+										</div>
+									</div>
+								</div>   
+								<div class="mp-foot" id="footer">    
+									<div class="weui-desktop-foot">           
+										<div class="weui-desktop-foot__extra">                
+											<p class="weui-desktop-link">Copyright © 2012-2018 Aha. All Rights Reserved.</p>              
+										</div>    
+									</div>
+								</div>
+			</div>
+		</div>
+			</body>
+		</html>
