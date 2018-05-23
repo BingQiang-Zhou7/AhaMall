@@ -1,5 +1,5 @@
 # AhaMall
-<b>Javaweb training in junior semester</b>
+<strong>Javaweb training in junior semester</strong>
 
 <b>development environment<b></br>
 JDK 10.0.1</br>
