@@ -1,7 +1,7 @@
 # AhaMall
-<strong>Javaweb training in junior semester</strong>
+** Javaweb training in junior semester **
 
-<b>development environment<b></br>
+* development environment *</br>
 JDK 10.0.1</br>
 Tomcat 9.0.8</br>
 win10 17134<br>
