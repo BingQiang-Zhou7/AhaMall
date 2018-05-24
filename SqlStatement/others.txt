@@ -1,0 +1,7 @@
+SELECT `column` FROM `table` WHERE POSITION('keyword' IN `filed`);
+
+SELECT * FROM `commodity`
+ORDER BY commodity.addedTime DESC;
+
+SELECT * FROM `commodity`
+WHERE POSITION('pro' IN commodity.description);
