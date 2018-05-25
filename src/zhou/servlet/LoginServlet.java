@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 //		PrintWriter out = response.getWriter();
 //		out.print(account);
 //		out.print(password);
-		//TODO 验证用户信息 并转到主页
+		//验证用户信息 并转到主页
 		Object[] list = new Object[] {phoneNum,password};
 		DataAccess db = new DataAccess(this.getServletContext().getInitParameter("DBName"));
 		//System.out.println(db.getErrorStr());
