@@ -8,8 +8,9 @@
 <link href="index.css" rel="stylesheet" type="text/css">
 <link href="main.css" rel="stylesheet" type="text/css">
 <link href="style.css" rel="stylesheet" type="text/css">
+<script src="link.js"></script>
 </head>
-<body class="wide">
+<body class="wide" onLoad="load();">
 <div class="header">
     <div class="layout">
         <div class="left">
@@ -22,28 +23,28 @@
             <ul>
                 <li>
                     <div class="s-dropdown">
-                        <div class="h h-wide" id="header-toolbar-minicart">
+                        <div class="h h-wide" >
                             <a href="../login/login.htm">请登录</a>
                         </div>
                     </div>
                 </li>
              	<li>
                     <div class="s-dropdown">
-                        <div class="h h-wide" id="header-toolbar-minicart">
+                        <div class="h h-wide" >
                             <a href="../register/register.htm">注册</a>
                         </div>
                     </div>
                 </li>
                 <li>
                     <div class="s-dropdown">
-                        <div class="h h-wide" id="header-toolbar-minicart">
+                        <div class="h h-wide" >
                             <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
                         </div>
                         </div>
                 </li>
                 <li>
                     <div class="s-dropdown">
-                        <div class="h h-wide" id="header-toolbar-minicart">
+                        <div class="h h-wide" >
                             <a href="../shoppingCart/shoppingCart.htm" class="icon-minicart">
                                 <span>购物车(<span id="header-cart-total">0</span>)</span>
                             </a>
@@ -84,7 +85,7 @@
 			<div class="p-title">分类：</div>
 			<div class="p-default">
 				<ul>
-                    <li id="first-category" class="selected"><a href="">全部</a></li>
+                    <li id="category-0" class="selected"><a href="javascript:;" onClick="onClickLink('category-0',1);">全部</a></li>
 					<!--<li class="selected"><a href="javascript:;">全部</a></li>-->
 				</ul>
 			</div>
@@ -94,11 +95,11 @@
 				<!-- 一行的高度为30px,显示n行，p-expand的高度为nx30 -->
 				<div class="p-expand">
 					<ul class="clearfix">					
-	                    <li><a href="">手机</a></li>
-	                    <li><a href="">笔记本</a></li>
-	                    <li><a href="">平板</a></li>
-	                    <li><a href="">智能家居</a></li>
-	                    <li><a href="">配件</a></li>
+	                    <li id="category-1"><a href="javascript:;" onClick="onClickLink('category-1',1);">手机</a></li>
+	                    <li id="category-2"><a href="javascript:;" onClick="onClickLink('category-2',1);">笔记本</a></li>
+	                    <li id="category-3"><a href="javascript:;" onClick="onClickLink('category-3',1);">平板</a></li>
+	                    <li id="category-4"><a href="javascript:;" onClick="onClickLink('category-4',1);">智能家居</a></li>
+	                    <li id="category-5"><a href="javascript:;" onClick="onClickLink('category-5',1);">配件</a></li>
 					</ul>
 				</div>
 			</div>
@@ -113,16 +114,16 @@
 			<div class="p-title">排序：</div>
 			<div class="p-default">
 				<ul>
-					<li id="sort-0" class="selected"><a href="javascript:;" onclick="ec.product.sort('0')">默认</a></li>
+					<li id="sort-0" class="selected"><a href="javascript:;" onClick="onClickLink('sort-0',2);">默认</a></li>
 				</ul>
 			</div>
 			<div class="p-values">
 				<div class="p-expand">					
 					<ul class="clearfix">
 					    <!-- 升序选择（从低到高）： sort-asc selected   降序选择（从高到低）： sort-desc selected -->
-						<li id="sort-1"><a href="javascript:;" class="sort-price" onclick="ec.product.sort('1')">价格</a></li>
-						<li id="sort-2"><a href="javascript:;" class="sort-eval" onclick="ec.product.sort('2')">评价数</a></li>
-						<li id="sort-3"><a href="javascript:;" class="sort-added" onclick="ec.product.sort('3')">上架时间</a></li>
+						<li id="sort-1"><a href="javascript:;" class="sort-price" onClick="onClickLink('sort-1',2);">价格</a></li>
+						<li id="sort-2"><a href="javascript:;" class="sort-eval" onClick="onClickLink('sort-2',2);">评价数</a></li>
+						<li id="sort-3"><a href="javascript:;" class="sort-added" onClick="onClickLink('sort-3',2);">上架时间</a></li>
 					</ul>
 				</div>
 			</div>
