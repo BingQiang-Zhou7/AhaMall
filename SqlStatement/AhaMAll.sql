@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 25/05/2018 18:57:12
+ Date: 29/05/2018 18:52:30
 */
 
 SET NAMES utf8mb4;
@@ -99,6 +99,22 @@ INSERT INTO `commodity` VALUES ('xiaomi_004', 'wristband 2', '智能穿戴', 149
 INSERT INTO `commodity` VALUES ('xiaomi_005', 'headphones', '配件', 499, '2016-12', 'xiaomi/headphones.jpg', '小米头戴式耳机 升级版 石墨烯发声振膜 / 被动低频辐射器设计 / 封闭式音腔设计 / 手机直推高保真音质', 2);
 
 -- ----------------------------
+-- Table structure for shoppingcart
+-- ----------------------------
+DROP TABLE IF EXISTS `shoppingcart`;
+CREATE TABLE `shoppingcart`  (
+  `userPhoneNum` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `commodityID` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `numOfCommodity` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`userPhoneNum`, `commodityID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of shoppingcart
+-- ----------------------------
+INSERT INTO `shoppingcart` VALUES ('1', '1', 4);
+
+-- ----------------------------
 -- Table structure for tableuser
 -- ----------------------------
 DROP TABLE IF EXISTS `tableuser`;
@@ -118,6 +134,26 @@ INSERT INTO `tableuser` VALUES ('13312345678', '123234234234212312', '李四', '
 INSERT INTO `tableuser` VALUES ('13343214321', '131312313123131231', '王五', '12345678');
 
 -- ----------------------------
+-- Procedure structure for InsertCommodityToShoppingCart
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `InsertCommodityToShoppingCart`;
+delimiter ;;
+CREATE PROCEDURE `InsertCommodityToShoppingCart`(IN `PhoneNum` varchar(11),IN `CommodityID` varchar(16),IN `NumOfCommodity` INT)
+BEGIN
+DECLARE i int ;
+select @i := COUNT(*) from shoppingcart where shoppingcart.userPhoneNum = PhoneNum AND shoppingcart.commodityID = CommodityID;
+IF @i>0 THEN
+	UPDATE shoppingcart SET shoppingcart.numOfCommodity=NumOfCommodity + shoppingcart.numOfCommodity
+	WHERE shoppingcart.userPhoneNum = PhoneNum AND shoppingcart.commodityID = CommodityID;
+	ELSE
+	INSERT INTO shoppingcart(shoppingcart.userPhoneNum,shoppingcart.commodityID,shoppingcart.numOfCommodity)
+	VALUES(PhoneNum,CommodityID,NumOfCommodity);
+END IF;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for InsertUserInfo
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `InsertUserInfo`;
@@ -130,23 +166,6 @@ IF @i=0 THEN
 	INSERT INTO tableuser(tableuser.userPhoneNum,tableuser.userID,tableuser.userName,tableuser.userPassword)
 	VALUES(PhoneNum,ID,`Name`,`Password`);
 END IF;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for SearchCommodity
--- ----------------------------
-DROP PROCEDURE IF EXISTS `SearchCommodity`;
-delimiter ;;
-CREATE PROCEDURE `SearchCommodity`(IN `inputstr` varchar(16))
-BEGIN
-set sql_mode= 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-		SELECT * FROM commodity
-		INNER JOIN `comment`	ON id = `comment`.commodityid
-		WHERE POSITION(inputstr in commodity.description)
-		or POSITION(inputstr in commodity.type)
-		or POSITION(inputstr in commodity.price);
 END
 ;;
 delimiter ;
@@ -166,60 +185,68 @@ END
 delimiter ;
 
 -- ----------------------------
--- Procedure structure for SortCommodityByAddedTime
+-- Procedure structure for SearchCommodityFuzzy
 -- ----------------------------
-DROP PROCEDURE IF EXISTS `SortCommodityByAddedTime`;
+DROP PROCEDURE IF EXISTS `SearchCommodityFuzzy`;
 delimiter ;;
-CREATE PROCEDURE `SortCommodityByAddedTime`(IN `selectedtype` varchar(16))
+CREATE PROCEDURE `SearchCommodityFuzzy`(IN `inputstr` varchar(16))
 BEGIN
-IF(selectedtype="全部")
-THEN
-	SELECT * FROM commodity
-	ORDER BY price;
-	ELSE 
-	SELECT * FROM commodity
-	WHERE commodity.type = selectedtype
-	ORDER BY price;
-END IF;
+set sql_mode= 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+		SELECT * FROM commodity
+		INNER JOIN `comment`	ON id = `comment`.commodityid
+		WHERE POSITION(inputstr in commodity.description)
+		or POSITION(inputstr in commodity.type)
+		or POSITION(inputstr in commodity.price);
 END
 ;;
 delimiter ;
 
 -- ----------------------------
--- Procedure structure for SortCommodityByCommentTimes
+-- Procedure structure for SortCommodityWithTypeAndSort
 -- ----------------------------
-DROP PROCEDURE IF EXISTS `SortCommodityByCommentTimes`;
+DROP PROCEDURE IF EXISTS `SortCommodityWithTypeAndSort`;
 delimiter ;;
-CREATE PROCEDURE `SortCommodityByCommentTimes`(IN `selectedtype` varchar(16))
+CREATE PROCEDURE `SortCommodityWithTypeAndSort`(IN `selectedtype` varchar(16),IN `wayofsort` varchar(16))
 BEGIN
 IF(selectedtype="全部")
 THEN
-	SELECT  *  FROM commodity
-	ORDER BY numofcomment DESC;
-	ELSE 
-	SELECT * FROM commodity
-	WHERE commodity.type = selectedtype
-	ORDER BY numofcomment DESC;
-END IF;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for SortCommodityByPrice
--- ----------------------------
-DROP PROCEDURE IF EXISTS `SortCommodityByPrice`;
-delimiter ;;
-CREATE PROCEDURE `SortCommodityByPrice`(IN `selectedtype` varchar(16))
-BEGIN
-IF(selectedtype="全部")
-THEN
-	SELECT * FROM commodity
-	ORDER BY addedTime DESC;
-	ELSE 
-	SELECT * FROM commodity
-	WHERE commodity.type = selectedtype
-	ORDER BY addedTime DESC;
+	CASE wayofsort
+		WHEN "价格" 
+		THEN
+			SELECT * FROM commodity
+			ORDER BY commodity.price;
+		WHEN "评价数" 
+		THEN
+			SELECT * FROM commodity
+			ORDER BY commodity.numofcomment DESC;
+		WHEN "上架时间" 
+		THEN
+			SELECT * FROM commodity
+			ORDER BY commodity.addedTime DESC;
+		ELSE -- “默认”
+			SELECT * FROM commodity;
+	END CASE;
+ELSE 
+	CASE wayofsort
+		WHEN "价格" 
+		THEN
+			SELECT * FROM commodity
+			WHERE commodity.type = selectedtype
+			ORDER BY commodity.price;
+		WHEN "评价数" 
+		THEN
+			SELECT * FROM commodity
+			WHERE commodity.type = selectedtype
+			ORDER BY commodity.numofcomment DESC;
+		WHEN "上架时间" 
+		THEN
+			SELECT * FROM commodity
+			WHERE commodity.type = selectedtype
+			ORDER BY commodity.addedTime DESC;
+		ELSE -- “默认”
+			SELECT * FROM commodity
+			WHERE commodity.type = selectedtype;
+	END CASE;
 END IF;
 END
 ;;
