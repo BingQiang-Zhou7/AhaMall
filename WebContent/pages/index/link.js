@@ -8,7 +8,10 @@ function load()
 	var sortName = ["默认","价格","评论数","上架时间"];
 	var categoryUrl = GetUrlParameter('categoryName');
 	var sortUrl = GetUrlParameter('sortName');
-	
+	if(categoryUrl == null || sortUrl == null)
+		{
+			return ;
+		}
 	
 	for(var i = 0;i<category.length;i++)
 	{
