@@ -9,6 +9,7 @@
 <link href="main.css" rel="stylesheet" type="text/css">
 <link href="style.css" rel="stylesheet" type="text/css">
 <script src="link.js"></script>
+<script src="showDialog.js"></script>
 </head>
 <body class="wide" onLoad="load();">
 <div class="header">
@@ -129,27 +130,51 @@
 			</div>
 		</div><!-- 20140726-商品类别-排序-end -->
 	</div><!-- 20140726-商品类别-end -->
-
-	<div class="hr-20"></div>
-</div>				
+</div>
+	<div class="hr-20"></div>			
 <div class="layout">
 	<!-- 20140726-频道-列表-start -->
+
+	<div class="pro-cate-null hide">
+		            抱歉，没有找到<span class="red"> “小米” </span>的相关商品!
+		</div>
+		<div id="cart-tips" class="pro-popup-area hide" >
+			<div class="b" style="display: block;">
+				<div class="pro-add-success">
+					<dl>
+					<dt><s></s></dt>
+						<dd>
+							<div class="pro-add-success-msg">成功加入购物车!</div>
+						</dd>
+					</dl>					
+				</div>
+			</div>
+		</div>
+		<div id="comment-tips" class="pro-popup-area hide" >
+			<div class="b" style="display: block;">
+					<dl>
+						<dd>
+							<div class="pro-add-success-msg" align="center" style="color: #e01d20">暂时还没有评论！</div>
+						</dd>
+					</dl>					
+			</div>
+		</div>
     <div class="channel-list">
         <!-- 20140727-商品列表-start -->
 		<div class="pro-list clearfix">
 			<ul>
 				<li>
 					<div class="pro-panels">
-						<p class="p-img"><a target="_blank" href="https://www.vmall.com/product/10086785341226.html" title="荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通 双卡双待 高配版" onclick="pushListProClickMsg('2601010038102')"><img alt="荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通 高配版" src="1.jpg"></a></p>
-						<p class="p-name"><a target="_blank" href="https://www.vmall.com/product/10086785341226.html" title="荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通 双卡双待 高配版" onclick="pushListProClickMsg('2601010038102')">荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通 高配版<span class="red"></span></a></p>
+						<p class="p-img"><a  href="../comment/comment.htm" title="荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通 双卡双待 高配版" ><img alt="荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通 高配版" src="1.jpg"></a></p>
+						<p class="p-name"><a href="../comment/comment.htm" title="荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通 双卡双待 高配版" >荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通 高配版<span class="red"></span></a></p>
 						<p class="p-price"><b>¥2599</b></p>
 						<s class="p-tag"><img alt="荣耀平板2 3GB+32GB WiFi版（香槟金）" src="sell.png"><div></div></s>
 						<div class="p-button clearfix">
 							<table border="1">
 								<tbody>
 									<tr>
-									<td><a target="_blank" href="https://www.vmall.com/product/10086785341226.html" class="p-button-cart"><span>加入购物车</span></a></td>
-										<td><label class="p-button-score"><span>24467人评价</span></label></td>
+									<td><a href="javascript:;" onClick="return showCartDialog();" class="p-button-cart"><span>加入购物车</span></a></td>
+										<td><label class="p-button-score"><span id="numOfComment">0</span>人评价</label></td>
 									</tr>
 								</tbody>
 							</table>
