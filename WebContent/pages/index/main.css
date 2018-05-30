@@ -85,7 +85,7 @@
 .popup-extend-area .h {
  background:transparent url(../../images/echannel/bg/bg22.jpg) scroll no-repeat
 }
-.pro-tips-area i,.pro-add-success dt s,.pro-suit-parts-area .and,.suit-master-area .and,.pro-suit-parts-area .p-price s,.pro-comment-item .arrow,.icon-qa,.pro-sku-tips-detail i,.pro-sku-tips-detail s,.sku-select .sku i,.pro-predict .address i,.pro-add-error i {
+.pro-tips-area i,.pro-add-success dt b,.pro-suit-parts-area .and,.suit-master-area .and,.pro-suit-parts-area .p-price b,.pro-comment-item .arrow,.icon-qa,.pro-sku-tips-detail i,.pro-sku-tips-detail b,.sku-select .sku i,.pro-predict .address i,.pro-add-error i {
  background:transparent url(icon33.png) scroll no-repeat
 }
 .pro-gallery-area .pro-gallery-back,.pro-gallery-area .pro-gallery-forward,.icon-clear {
@@ -1825,7 +1825,7 @@
 .pro-add-success dt {
  float:left
 }
-.pro-add-success dt s {
+.pro-add-success dt b {
  display:inline-block;
  *display:inline;
  *zoom:1;
