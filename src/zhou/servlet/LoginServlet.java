@@ -51,6 +51,7 @@ public class LoginServlet extends HttpServlet {
 					String userName = resultSet.getString("userName");
 					String userPassword = resultSet.getString("userPassword");
 					User user = new User(userPhoneNum, userID, userName, userPassword);
+					//System.out.println(userPhoneNum);
 					db.colseConnect();
 					request.getSession().setAttribute("userInfo", user);
 					response.sendRedirect("pages/jsp/jump.jsp");
