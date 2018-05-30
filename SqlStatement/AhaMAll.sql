@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 29/05/2018 18:52:30
+ Date: 30/05/2018 11:02:40
 */
 
 SET NAMES utf8mb4;
@@ -206,47 +206,112 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `SortCommodityWithTypeAndSort`;
 delimiter ;;
-CREATE PROCEDURE `SortCommodityWithTypeAndSort`(IN `selectedtype` varchar(16),IN `wayofsort` varchar(16))
+CREATE PROCEDURE `SortCommodityWithTypeAndSort`(IN `selectedtype` varchar(16),IN `wayofsort` varchar(16),IN `fuzzy` varchar(16))
 BEGIN
-IF(selectedtype="全部")
+IF (fuzzy = "false")
 THEN
-	CASE wayofsort
-		WHEN "价格" 
-		THEN
-			SELECT * FROM commodity
-			ORDER BY commodity.price;
-		WHEN "评价数" 
-		THEN
-			SELECT * FROM commodity
-			ORDER BY commodity.numofcomment DESC;
-		WHEN "上架时间" 
-		THEN
-			SELECT * FROM commodity
-			ORDER BY commodity.addedTime DESC;
-		ELSE -- “默认”
-			SELECT * FROM commodity;
-	END CASE;
-ELSE 
-	CASE wayofsort
-		WHEN "价格" 
-		THEN
-			SELECT * FROM commodity
-			WHERE commodity.type = selectedtype
-			ORDER BY commodity.price;
-		WHEN "评价数" 
-		THEN
-			SELECT * FROM commodity
-			WHERE commodity.type = selectedtype
-			ORDER BY commodity.numofcomment DESC;
-		WHEN "上架时间" 
-		THEN
-			SELECT * FROM commodity
-			WHERE commodity.type = selectedtype
-			ORDER BY commodity.addedTime DESC;
-		ELSE -- “默认”
-			SELECT * FROM commodity
-			WHERE commodity.type = selectedtype;
-	END CASE;
+	IF(selectedtype="全部")
+	THEN
+		CASE wayofsort
+			WHEN "价格" 
+			THEN
+				SELECT * FROM commodity
+				ORDER BY commodity.price;
+			WHEN "评价数" 
+			THEN
+				SELECT * FROM commodity
+				ORDER BY commodity.numofcomment DESC;
+			WHEN "上架时间" 
+			THEN
+				SELECT * FROM commodity
+				ORDER BY commodity.addedTime DESC;
+			ELSE -- “默认”
+				SELECT * FROM commodity;
+		END CASE;
+	ELSE 
+		CASE wayofsort
+			WHEN "价格" 
+			THEN
+				SELECT * FROM commodity
+				WHERE commodity.type = selectedtype
+				ORDER BY commodity.price;
+			WHEN "评价数" 
+			THEN
+				SELECT * FROM commodity
+				WHERE commodity.type = selectedtype
+				ORDER BY commodity.numofcomment DESC;
+			WHEN "上架时间" 
+			THEN
+				SELECT * FROM commodity
+				WHERE commodity.type = selectedtype
+				ORDER BY commodity.addedTime DESC;
+			ELSE -- “默认”
+				SELECT * FROM commodity
+				WHERE commodity.type = selectedtype;
+		END CASE;
+	END IF;
+ELSE
+		IF(selectedtype="全部")
+	THEN
+		CASE wayofsort
+			WHEN "价格" 
+			THEN
+				SELECT * FROM commodity
+				WHERE POSITION(fuzzy in commodity.description)
+				OR POSITION(fuzzy in commodity.type)
+				OR POSITION(fuzzy in commodity.price)
+				ORDER BY commodity.price;
+			WHEN "评价数" 
+			THEN
+				SELECT * FROM commodity
+				WHERE POSITION(fuzzy in commodity.description)
+				OR POSITION(fuzzy in commodity.type)
+				OR POSITION(fuzzy in commodity.price)
+				ORDER BY commodity.numofcomment DESC;
+			WHEN "上架时间" 
+			THEN
+				SELECT * FROM commodity
+				WHERE POSITION(fuzzy in commodity.description)
+				OR POSITION(fuzzy in commodity.type)
+				OR POSITION(fuzzy in commodity.price)
+				ORDER BY commodity.addedTime DESC;
+			ELSE -- “默认”
+				SELECT * FROM commodity;
+		END CASE;
+	ELSE 
+		CASE wayofsort
+			WHEN "价格" 
+			THEN
+				SELECT * FROM commodity
+				WHERE commodity.type = selectedtype 
+				AND(POSITION(fuzzy in commodity.description)
+				OR POSITION(fuzzy in commodity.type)
+				OR POSITION(fuzzy in commodity.price))
+				ORDER BY commodity.price;
+			WHEN "评价数" 
+			THEN
+				SELECT * FROM commodity
+				WHERE commodity.type = selectedtype
+				AND(POSITION(fuzzy in commodity.description)
+				OR POSITION(fuzzy in commodity.type)
+				OR POSITION(fuzzy in commodity.price))
+				ORDER BY commodity.numofcomment DESC;
+			WHEN "上架时间" 
+			THEN
+				SELECT * FROM commodity
+				WHERE commodity.type = selectedtype
+				AND(POSITION(fuzzy in commodity.description)
+				OR POSITION(fuzzy in commodity.type)
+				OR POSITION(fuzzy in commodity.price))
+				ORDER BY commodity.addedTime DESC;
+			ELSE -- “默认”
+				SELECT * FROM commodity
+				WHERE commodity.type = selectedtype
+				AND(POSITION(fuzzy in commodity.description)
+				OR POSITION(fuzzy in commodity.type)
+				OR POSITION(fuzzy in commodity.price));
+		END CASE;
+	END IF;
 END IF;
 END
 ;;
