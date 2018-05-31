@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=GB18030"
     pageEncoding="GB18030"%>
+<%
+	//TODO 获取商品信息
+%>
 <!DOCTYPE html>
 <html>
 <head>
