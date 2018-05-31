@@ -3,7 +3,12 @@
     pageEncoding="GB18030"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-	//User user = (User)session.getAttribute("userInfo");
+//	User user = (User)session.getAttribute("userInfo");
+//	if(user != null)
+//	{
+//		session.removeAttribute("userInfo");
+//		request.setAttribute("userInfo", user);
+//	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -37,7 +42,7 @@
         		<c:otherwise>
         		<label id="Tip">欢迎您，<c:out value="${sessionScope.userInfo.userName}"></c:out></label><br>
         		<b id="second">5</b>秒后跳转到主页面 <br>
-        		<a href="../index/index.htm" style="color: #7287FE">立即跳转</a>
+        		<a href="../index/index.jsp" style="color: #7287FE">立即跳转</a>
         		</c:otherwise>
         	</c:choose>
  		</p>

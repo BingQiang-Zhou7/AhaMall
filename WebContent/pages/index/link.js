@@ -61,6 +61,12 @@ function GetUrlParameter(name)
 		}
 }
 
+function ToCommentPage(commodity) {
+	"use strict";
+	 window.location.href =encodeURI("../comment/comment.jsp?commodityName="+commodity);
+}
+
+
 
 function onClickLink(parameter,type)
 {

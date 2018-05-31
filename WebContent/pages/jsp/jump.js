@@ -9,7 +9,7 @@ function load() {
 	    i--;
 	    sec.innerHTML = i;
 	    if(i==1){
-	      window.location.href = "../../pages/login/login.htm";
+	      window.location.href = "../index/index.jsp";
 	    }
 	  },1000);
 }

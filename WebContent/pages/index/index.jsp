@@ -5,11 +5,24 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%
-	//TODO 获取商品信息
+	// 获取商品信息
 	String categoryName = request.getParameter("categoryName");	
 	String sortName = request.getParameter("sortName");
 	String fuzzyStr = request.getParameter("fuzzyStr");
+	String logout = request.getParameter("logout");
 	ArrayList<Commodity> commodityList =null;
+	User user = (User)session.getAttribute("userInfo");
+	if(user != null)
+	{
+		session.removeAttribute("userInfo");
+		request.setAttribute("userInfo", user);
+		if(logout!= null && logout.equals("1"))
+		{
+			request.removeAttribute("userInfo");
+		}
+	}
+//	if(user != null)
+//	System.out.println(user.userName);
 	request.removeAttribute("commodityList");
 	if(categoryName == null)
 	{
@@ -49,7 +62,61 @@
 <script src="showDialog.js"></script>
 </head>
 <body class="wide" onLoad="load();">
-
+<div class="header">
+    <div class="layout">
+        <div class="left">
+            <div class="logo"><b style="font-size: 28px">AhaMall</b></div>
+				<div class="shortcut">
+					<div class="layout">
+						<div class="s-main " style="margin-top: 10px;">
+				            <ul>
+				                <li>
+				                    <div class="s-dropdown">
+				                        <div class="h h-wide" >
+				                        <c:if test="${empty requestScope.userInfo}">
+				                            <a href="../login/login.htm">请登录</a>
+				                         </c:if>
+				                         <c:if test="${not empty requestScope.userInfo}">
+				                            ${requestScope.userInfo.userName}
+				                         </c:if>
+				                        </div>
+				                    </div>
+				                </li>
+				             	<li>
+				                    <div class="s-dropdown">
+				                        <div class="h h-wide" >
+				                        <c:if test="${empty requestScope.userInfo}">
+				                            <a href="../register/register.htm">注册</a>
+				                         </c:if>
+				                         <c:if test="${not empty requestScope.userInfo}">
+				                            <a href="../index/index.jsp?Logout=1">注销</a>
+				                         </c:if>
+				                        </div>
+				                    </div>
+				                </li>
+				                <li>
+				                    <div class="s-dropdown">
+				                        <div class="h h-wide" >
+				                            <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
+				                        </div>
+				                        </div>
+				                </li>
+				                <li>
+				                    <div class="s-dropdown">
+				                        <div class="h h-wide" >
+				                            <a href="../shoppingCart/shoppingCart.htm" class="icon-minicart">
+				                                <span>购物车(<span id="header-cart-total">0</span>)</span>
+				                            </a>
+				                        </div>
+				                    </div>
+				                </li>
+				            </ul>
+        				</div>
+    				</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <div class="hr-10"></div>
 <div class="shortcut">
 	<div class="layout">
@@ -123,14 +190,21 @@
 		<div class="b" style="display: block;">
 			<div class="pro-add-success">
 				<dl>
-					<dt><b></b></dt>
+					<dt><b style="background-position:-34px 0" id="IconTip"></b></dt>
 					<dd>
-						<div class="pro-add-success-msg">成功加入购物车!</div>
+						<div class="pro-add-success-msg" id="CartTip">成功加入购物车!</div>
 					</dd>
+					<!--
+					 <dt><b style="background-position:-116px 0"></b></dt>
+					<dd>
+						<div class="pro-add-success-msg" style="color: #e01d20;">操作失败，请登录后再试！</div>
+					</dd>
+					 -->
 				</dl>					
 			</div>
 		</div>
 	</div>
+	<!-- 
 	<div id="comment-tips" class="pro-popup-area hide" >
 		<div class="b" style="display: block;">
 			<dl>
@@ -140,6 +214,7 @@
 			</dl>					
 		</div>
 	</div>
+	 -->
     <div class="channel-list">
 		<div class="pro-list clearfix">
 			<ul>
@@ -147,9 +222,11 @@
 				<c:forEach items="${requestScope.commodityList}" var="commodity" >
 				<li>
 					<div class="pro-panels">
-						<p class="p-img"><a  href="../comment/comment.htm" title="${commodity.commodityDescription}" >
+						<p class="p-img"><a  href="../comment/comment.jsp?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}" 
+						title="${commodity.commodityDescription}" >
 						<img alt="${commodity.commodityDescription}" src="../images/${commodity.commodityAddressOfImage}"></a></p>
-						<p class="p-name"><a href="../comment/comment.htm" title="${commodity.commodityDescription}" >${commodity.commodityDescription}<span class="red"></span></a></p>
+						<p class="p-name"><a href="../comment/comment.jsp?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}"
+						 title="${commodity.commodityDescription}" >${commodity.commodityDescription}<span class="red"></span></a></p>
 						<p class="p-price"><b>¥${commodity.commodityPrice}</b></p>
 						<c:if test="${commodity.commodityIsRecommend == 1}">
 						<b class="p-tag"><img alt="" src="sell.png"></b>
@@ -158,7 +235,14 @@
 							<table border="1">
 								<tbody>
 									<tr>
-									<td><a href="javascript:;" onClick="return showCartDialog();" class="p-button-cart"><span>加入购物车</span></a></td>
+									<td>
+									<c:if test="${not empty requestScope.userInfo}">
+									<a href="javascript:;" onClick="return showCartDialog(1);" class="p-button-cart"><span>加入购物车</span></a>
+									</c:if>
+									<c:if test="${empty requestScope.userInfo}">
+									<a href="javascript:;" onClick="return showCartDialog(2);" class="p-button-cart"><span>加入购物车</span></a>
+									</c:if>
+									</td>
 										<td><label class="p-button-score"><span id="numOfComment">${commodity.commodityNumberOfComment}</span>人评价</label></td>
 									</tr>
 								</tbody>

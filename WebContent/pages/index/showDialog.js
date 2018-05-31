@@ -1,7 +1,16 @@
 // JavaScript Document
 
-function showCartDialog() {
+function showCartDialog(islogin) {
 	"use strict";
+	//alert(islogin);
+	if (islogin == "2") {
+		var iconTip = document.getElementById("IconTip");
+		var cartTip = document.getElementById("CartTip");
+		
+		cartTip.innerHTML="操作失败，请登录后再试！";
+		cartTip.style.color="#e01d20";
+		iconTip.style.backgroundPosition="-116px 0";
+	}
 	var cart = document.getElementById("cart-tips");
 	cart.className="pro-popup-area";
 	  var i = 3;
@@ -13,5 +22,6 @@ function showCartDialog() {
 	    }
 	  },1000);
 	//跳转
+	//alert(commodity);
 	return false;
 }

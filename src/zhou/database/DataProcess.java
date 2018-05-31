@@ -3,6 +3,8 @@ package zhou.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import zhou.dao.Comment;
 import zhou.dao.Commodity;
 
 public class DataProcess {
@@ -36,21 +38,55 @@ public class DataProcess {
 		dataAccess.colseConnect();
 	}
 	
+	//获取商品评论
+	public ArrayList<Comment> getCommentInfo(String commodityid) {
+		Object[] parameter = new Object[] {commodityid};
+		ResultSet resultSet = dataAccess.DatabaseOperations("call SearchCommodityComment(?)", parameter);
+		ArrayList<Comment> CommentList = new ArrayList<Comment>();
+		try {
+			while (resultSet.next()) {
+				String userPhoneNum = resultSet.getString("userPhoneNum");
+				userPhoneNum =userPhoneNum.substring(0, 3)+"********";
+				CommentList.add(new Comment(resultSet.getString("name"),userPhoneNum, 
+						resultSet.getString("content"), resultSet.getString("commenttime"))
+						);
+			}
+			resultSet.close();
+			if (CommentList.size() == 0) {
+				return null;
+			}
+			return CommentList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}	
+	}
+	
+	
 	public static void main(String[] args) {
-		ArrayList<Commodity> commodityList = new DataProcess().getCommodityInfo("全部", "默认", "false");
-		
-		for (Commodity commodity : commodityList) {
-			System.out.println(commodity.getCommodityID());
-			System.out.println(commodity.getCommodityName());
-			System.out.println(commodity.getCommodityType());
-			System.out.println(commodity.getCommodityPrice());
-			System.out.println(commodity.getCommodityAddressOfImage());
-			System.out.println(commodity.getCommodityNumberOfComment());
-			System.out.println(commodity.getCommodityAddTime());
-			System.out.println(commodity.getCommodityDescription());
-			System.out.println(commodity.getCommodityIsRecommend());
+//		ArrayList<Commodity> commodityList = new DataProcess().getCommodityInfo("全部", "默认", "false");
+//		
+//		for (Commodity commodity : commodityList) {
+//			System.out.println(commodity.getCommodityID());
+//			System.out.println(commodity.getCommodityName());
+//			System.out.println(commodity.getCommodityType());
+//			System.out.println(commodity.getCommodityPrice());
+//			System.out.println(commodity.getCommodityAddressOfImage());
+//			System.out.println(commodity.getCommodityNumberOfComment());
+//			System.out.println(commodity.getCommodityAddTime());
+//			System.out.println(commodity.getCommodityDescription());
+//			System.out.println(commodity.getCommodityIsRecommend());
+//			System.out.println("----------------------------------------");
+//		}
+//		System.out.println(commodityList.size());
+		ArrayList<Comment> commentList = new DataProcess().getCommentInfo("xiaomi_005");
+		for (Comment comment : commentList) {
+			System.out.println(comment.getCommentConent());
+			System.out.println(comment.getCommentTime());
+			System.out.println(comment.getCommodityName());
+			System.out.println(comment.getUserPhoneNum());
 			System.out.println("----------------------------------------");
 		}
-		System.out.println(commodityList.size());
+		
 	}
 }
