@@ -3,11 +3,15 @@ function load()
 {
 	"use strict";
 	var category = ["category-0","category-1", "category-2","category-3","category-4", "category-5"];
-	var categoryName = ["全部","手机", "笔记本","平板","智能家居", "配件"];
+	var categoryName = ["全部","手机", "笔记本","平板","智能穿戴", "配件"];
 	var sort = ["sort-0","sort-1","sort-2","sort-3"];
-	var sortName = ["默认","价格","评论数","上架时间"];
+	var sortName = ["默认","价格","评价数","上架时间"];
 	var categoryUrl = GetUrlParameter('categoryName');
 	var sortUrl = GetUrlParameter('sortName');
+	var fuzzyStr = GetUrlParameter('fuzzyStr');
+	if (fuzzyStr != null && fuzzyStr != "false") {
+		 document.getElementById("search-kw").value = fuzzyStr;
+	}
 	if(categoryUrl == null || sortUrl == null)
 		{
 			return ;
@@ -39,6 +43,7 @@ function load()
 				document.getElementById(sort[j]).className="unselected";
 			}
 	}
+	//window.location.reload();
 }
 
 function GetUrlParameter(name)
@@ -61,10 +66,10 @@ function onClickLink(parameter,type)
 {
 	"use strict";
 	var category = ["category-0","category-1", "category-2","category-3","category-4", "category-5"];
-	var categoryName = ["全部","手机", "笔记本","平板","智能家居", "配件"];
+	var categoryName = ["全部","手机", "笔记本","平板","智能穿戴", "配件"];
 	var sort = ["sort-0","sort-1","sort-2","sort-3"];
-	var sortName = ["默认","价格","评论数","上架时间"];
-	var url = "?";
+	var sortName = ["默认","价格","评价数","上架时间"];
+	var url = "index.jsp?";
 	
 	for(var i = 0;i<category.length;i++)
 	{
@@ -106,5 +111,12 @@ function onClickLink(parameter,type)
 					}
 			}
 	}
-	location.href=url;
+	var searchFuzzy = document.getElementById("search-kw").value;
+	if(searchFuzzy == "")
+		{
+			searchFuzzy = "false";
+		}
+	url=url+"&fuzzyStr="+searchFuzzy;
+	//alert(url);
+	window.location.href=encodeURI(url);
 }

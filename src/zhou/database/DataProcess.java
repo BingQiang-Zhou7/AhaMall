@@ -18,9 +18,12 @@ public class DataProcess {
 				commodityList.add(
 						new Commodity(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
 								resultSet.getInt("price"), resultSet.getString("addedTime"), resultSet.getString("addressofimage"), 
-								resultSet.getString("description"),resultSet.getString("numofcomment")));
+								resultSet.getString("description"),resultSet.getString("numofcomment"),resultSet.getInt("isRecommend")));
 			}
 			resultSet.close();
+			if (commodityList.size() == 0) {
+				return null;
+			}
 			return commodityList;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -45,6 +48,7 @@ public class DataProcess {
 			System.out.println(commodity.getCommodityNumberOfComment());
 			System.out.println(commodity.getCommodityAddTime());
 			System.out.println(commodity.getCommodityDescription());
+			System.out.println(commodity.getCommodityIsRecommend());
 			System.out.println("----------------------------------------");
 		}
 		System.out.println(commodityList.size());

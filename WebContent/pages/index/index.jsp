@@ -1,15 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=GB18030"
-    pageEncoding="GB18030"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="zhou.database.*"%>
+<%@page import="zhou.dao.*"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%
-	//TODO »ñÈ¡ÉÌÆ·ÐÅÏ¢
+	//TODO èŽ·å–å•†å“ä¿¡æ¯
+	String categoryName = request.getParameter("categoryName");	
+	String sortName = request.getParameter("sortName");
+	String fuzzyStr = request.getParameter("fuzzyStr");
+	ArrayList<Commodity> commodityList =null;
+	request.removeAttribute("commodityList");
+	if(categoryName == null)
+	{
+		commodityList = new DataProcess().getCommodityInfo("å…¨éƒ¨", "é»˜è®¤", "false");
+	}
+	else
+	{
+//		System.out.println(categoryName);
+//		System.out.println(sortName);
+//		System.out.println(fuzzyStr);
+		commodityList = new DataProcess().getCommodityInfo(categoryName, sortName,fuzzyStr);
+	}
+	//System.out.println(commodityList.size());
+	request.setAttribute("commodityList", commodityList);
+//	for (Commodity commodity : commodityList) {
+//		System.out.println(commodity.getCommodityID());
+//		System.out.println(commodity.getCommodityName());
+//		System.out.println(commodity.getCommodityType());
+//		System.out.println(commodity.getCommodityPrice());
+//		System.out.println(commodity.getCommodityAddressOfImage());
+//		System.out.println(commodity.getCommodityNumberOfComment());
+//		System.out.println(commodity.getCommodityAddTime());
+//		System.out.println(commodity.getCommodityDescription());
+//		System.out.println("----------------------------------------");
+//	}
+//	System.out.println(commodityList.size());
 %>
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
-<meta http-equiv="Content-Language" content="zh-cn">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-<title>ÐÖµÜÉÌ³Ç</title>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AhaMall</title>
 <link href="ec.css" rel="stylesheet" type="text/css">
 <link href="index.css" rel="stylesheet" type="text/css">
 <link href="main.css" rel="stylesheet" type="text/css">
@@ -18,183 +49,133 @@
 <script src="showDialog.js"></script>
 </head>
 <body class="wide" onLoad="load();">
-<div class="header">
-    <div class="layout">
-        <div class="left">
-            <!-- 2017-02-15-logo-start -->
-            <div class="logo"><b style="font-size: 28px">AhaMall</b></div>
-            <!-- 2017-02-15-logo-end -->
-<div class="shortcut">
-<div class="layout">
-<div class="s-main " style="margin-top: 10px;">
-            <ul>
-                <li>
-                    <div class="s-dropdown">
-                        <div class="h h-wide" >
-                            <a href="../login/login.htm">ÇëµÇÂ¼</a>
-                        </div>
-                    </div>
-                </li>
-             	<li>
-                    <div class="s-dropdown">
-                        <div class="h h-wide" >
-                            <a href="../register/register.htm">×¢²á</a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="s-dropdown">
-                        <div class="h h-wide" >
-                            <a href="../toBeDevelop/toBeDevelop.htm">ÎÒµÄ¶©µ¥</a>
-                        </div>
-                        </div>
-                </li>
-                <li>
-                    <div class="s-dropdown">
-                        <div class="h h-wide" >
-                            <a href="../shoppingCart/shoppingCart.htm" class="icon-minicart">
-                                <span>¹ºÎï³µ(<span id="header-cart-total">0</span>)</span>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-    </div>
-    </div>
-</div><!-- 2017-02-15-Í·²¿-end -->
+
 <div class="hr-10"></div>
-    <div class="shortcut">
-    <div class="layout">
-            <div class="breadcrumb-area fcn" style="color: #333333; float: left;">
-            ÉÌÆ·&nbsp;&gt;&nbsp;
-        <span>¾¡ÇéÑ¡¹º°É</span>
-    </div>
-     <div class="right">
-            <div class="search-bar relative" id="searchBar-area">
-                <div class="search-bar-form" id="search-bar-form">
-                   <form method="get" onsubmit="return search(this)">
-                        <input class="text" placeholder="ËÑË÷ÉÌÆ·" maxlength="16" id="search-kw"  type="text">
-                        <input class="button" value="ËÑË÷" type="submit">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="shortcut">
+	<div class="layout">
+        <div class="breadcrumb-area fcn" style="color: #333333; float: left;">
+       å•†å“&nbsp;&gt;&nbsp;
+   <span>å°½æƒ…é€‰è´­å§</span>
+	</div>
+	<div class="right">
+       	<div class="search-bar relative" id="searchBar-area">
+           	<div class="search-bar-form" id="search-bar-form">
+                   <input class="text" placeholder="æœç´¢å•†å“" maxlength="16" id="search-kw" type="text">
+                   <input class="button" value="æœç´¢" onClick="onClickLink('fuzzy',3);">
+               	</div>
+           	</div>
+       	</div>
+   	</div>
 </div>	
-<div class="hr-10"></div><div class="layout">
-	<!-- 20140726-ÉÌÆ·Àà±ð-start -->
+<div class="hr-10"></div>
+<div class="layout">
 	<div class="pro-cate-area">
-		<!-- 20140726-ÉÌÆ·Àà±ð-ÊôÐÔ-start -->
 		<div class="pro-cate-attr clearfix">
-			<div class="p-title">·ÖÀà£º</div>
+			<div class="p-title">åˆ†ç±»ï¼š</div>
 			<div class="p-default">
 				<ul>
-                    <li id="category-0" class="selected"><a href="javascript:;" onClick="onClickLink('category-0',1);">È«²¿</a></li>
-					<!--<li class="selected"><a href="javascript:;">È«²¿</a></li>-->
+                    <li id="category-0" class="selected"><a href="javascript:onClickLink('category-0',1);" >å…¨éƒ¨</a></li>
 				</ul>
 			</div>
 			
-			<!-- ¶þ¼¶ÐéÄâ·ÖÀà -->
+			<!-- äºŒçº§è™šæ‹Ÿåˆ†ç±» -->
 			<div class="p-values">
-				<!-- Ò»ÐÐµÄ¸ß¶ÈÎª30px,ÏÔÊ¾nÐÐ£¬p-expandµÄ¸ß¶ÈÎªnx30 -->
+				<!-- ä¸€è¡Œçš„é«˜åº¦ä¸º30px,æ˜¾ç¤ºnè¡Œï¼Œp-expandçš„é«˜åº¦ä¸ºnx30 -->
 				<div class="p-expand">
 					<ul class="clearfix">					
-	                    <li id="category-1"><a href="javascript:;" onClick="onClickLink('category-1',1);">ÊÖ»ú</a></li>
-	                    <li id="category-2"><a href="javascript:;" onClick="onClickLink('category-2',1);">±Ê¼Ç±¾</a></li>
-	                    <li id="category-3"><a href="javascript:;" onClick="onClickLink('category-3',1);">Æ½°å</a></li>
-	                    <li id="category-4"><a href="javascript:;" onClick="onClickLink('category-4',1);">ÖÇÄÜ¼Ò¾Ó</a></li>
-	                    <li id="category-5"><a href="javascript:;" onClick="onClickLink('category-5',1);">Åä¼þ</a></li>
+	                    <li id="category-1"><a href="javascript:onClickLink('category-1',1);">æ‰‹æœº</a></li>
+	                    <li id="category-2"><a href="javascript:onClickLink('category-2',1);">ç¬”è®°æœ¬</a></li>
+	                    <li id="category-3"><a href="javascript:onClickLink('category-3',1);">å¹³æ¿</a></li>
+	                    <li id="category-4"><a href="javascript:onClickLink('category-4',1);">æ™ºèƒ½ç©¿æˆ´</a></li>
+	                    <li id="category-5"><a href="javascript:onClickLink('category-5',1);">é…ä»¶</a></li>
 					</ul>
 				</div>
-			</div>
+			</div>	
+		</div>
 			
-		</div><!-- 20140726-ÉÌÆ·Àà±ð-ÊôÐÔ-end -->
-		
-		<!-- 20140726-ÉÌÆ·Àà±ð-ÊôÐÔ-start -->
-        <!-- 20140726-ÉÌÆ·Àà±ð-ÊôÐÔ-end -->		
-		
-		<!-- 20140726-ÉÌÆ·Àà±ð-ÅÅÐò-start -->
 		<div class="pro-cate-sort clearfix">
-			<div class="p-title">ÅÅÐò£º</div>
+			<div class="p-title">æŽ’åºï¼š</div>
 			<div class="p-default">
 				<ul>
-					<li id="sort-0" class="selected"><a href="javascript:;" onClick="onClickLink('sort-0',2);">Ä¬ÈÏ</a></li>
+					<li id="sort-0" class="selected"><a href="javascript:onClickLink('sort-0',2);">é»˜è®¤</a></li>
 				</ul>
 			</div>
 			<div class="p-values">
 				<div class="p-expand">					
 					<ul class="clearfix">
-					    <!-- ÉýÐòÑ¡Ôñ£¨´ÓµÍµ½¸ß£©£º sort-asc selected   ½µÐòÑ¡Ôñ£¨´Ó¸ßµ½µÍ£©£º sort-desc selected -->
-						<li id="sort-1"><a href="javascript:;" class="sort-price" onClick="onClickLink('sort-1',2);">¼Û¸ñ</a></li>
-						<li id="sort-2"><a href="javascript:;" class="sort-eval" onClick="onClickLink('sort-2',2);">ÆÀ¼ÛÊý</a></li>
-						<li id="sort-3"><a href="javascript:;" class="sort-added" onClick="onClickLink('sort-3',2);">ÉÏ¼ÜÊ±¼ä</a></li>
+						<li id="sort-1"><a href="javascript:onClickLink('sort-1',2);" class="sort-price" >ä»·æ ¼</a></li>
+						<li id="sort-2"><a href="javascript:onClickLink('sort-2',2);" class="sort-eval"  >è¯„ä»·æ•°</a></li>
+						<li id="sort-3"><a href="javascript:onClickLink('sort-3',2);" class="sort-added" >ä¸Šæž¶æ—¶é—´</a></li>
 					</ul>
 				</div>
 			</div>
-		</div><!-- 20140726-ÉÌÆ·Àà±ð-ÅÅÐò-end -->
-	</div><!-- 20140726-ÉÌÆ·Àà±ð-end -->
+		</div>
+	</div>
 </div>
-	<div class="hr-20"></div>			
+<div class="hr-20"></div>			
 <div class="layout">
-	<!-- 20140726-ÆµµÀ-ÁÐ±í-start -->
-
-	<div class="pro-cate-null hide">
-		            ±§Ç¸£¬Ã»ÓÐÕÒµ½<span class="red"> ¡°Ð¡Ã×¡± </span>µÄÏà¹ØÉÌÆ·!
-		</div>
-		<div id="cart-tips" class="pro-popup-area hide" >
-			<div class="b" style="display: block;">
-				<div class="pro-add-success">
-					<dl>
+	<c:if test="${empty requestScope.commodityList}">
+		<div class="pro-cate-null">
+			            æŠ±æ­‰ï¼Œæ²¡æœ‰æ‰¾åˆ°<span class="red"> <%=fuzzyStr %> </span>çš„ç›¸å…³å•†å“!
+			</div>
+	</c:if>
+	<div id="cart-tips" class="pro-popup-area hide" >
+		<div class="b" style="display: block;">
+			<div class="pro-add-success">
+				<dl>
 					<dt><b></b></dt>
-						<dd>
-							<div class="pro-add-success-msg">³É¹¦¼ÓÈë¹ºÎï³µ!</div>
-						</dd>
-					</dl>					
-				</div>
+					<dd>
+						<div class="pro-add-success-msg">æˆåŠŸåŠ å…¥è´­ç‰©è½¦!</div>
+					</dd>
+				</dl>					
 			</div>
 		</div>
-<!--		<div id="comment-tips" class="pro-popup-area hide" >
-			<div class="b" style="display: block;">
-					<dl>
-						<dd>
-							<div class="pro-add-success-msg" align="center" style="color: #e01d20">ÔÝÊ±»¹Ã»ÓÐÆÀÂÛ£¡</div>
-						</dd>
-					</dl>					
-			</div>
-		</div> -->
+	</div>
+	<div id="comment-tips" class="pro-popup-area hide" >
+		<div class="b" style="display: block;">
+			<dl>
+				<dd>
+					<div class="pro-add-success-msg" align="center" style="color: #e01d20">æš‚æ—¶è¿˜æ²¡æœ‰è¯„è®ºï¼</div>
+				</dd>
+			</dl>					
+		</div>
+	</div>
     <div class="channel-list">
-        <!-- 20140727-ÉÌÆ·ÁÐ±í-start -->
 		<div class="pro-list clearfix">
 			<ul>
+			<c:if test="${not empty requestScope.commodityList}">
+				<c:forEach items="${requestScope.commodityList}" var="commodity" >
 				<li>
 					<div class="pro-panels">
-						<p class="p-img"><a  href="../comment/comment.htm" title="ÈÙÒ«10&nbsp;AIÉãÓ°ÊÖ»ú&nbsp;6GB+64GB&nbsp;»ÃÓ°À¶&nbsp;È«ÍøÍ¨ Ë«¿¨Ë«´ý ¸ßÅä°æ" ><img alt="ÈÙÒ«10&nbsp;AIÉãÓ°ÊÖ»ú&nbsp;6GB+64GB&nbsp;»ÃÓ°À¶&nbsp;È«ÍøÍ¨ ¸ßÅä°æ" src="1.jpg"></a></p>
-						<p class="p-name"><a href="../comment/comment.htm" title="ÈÙÒ«10&nbsp;AIÉãÓ°ÊÖ»ú&nbsp;6GB+64GB&nbsp;»ÃÓ°À¶&nbsp;È«ÍøÍ¨ Ë«¿¨Ë«´ý ¸ßÅä°æ" >ÈÙÒ«10&nbsp;AIÉãÓ°ÊÖ»ú&nbsp;6GB+64GB&nbsp;»ÃÓ°À¶&nbsp;È«ÍøÍ¨ ¸ßÅä°æ<span class="red"></span></a></p>
-						<p class="p-price"><b>0„62599</b></p>
-						<b class="p-tag"><img alt="ÈÙÒ«Æ½°å2 3GB+32GB WiFi°æ£¨ÏãéÄ½ð£©" src="sell.png"></b>
+						<p class="p-img"><a  href="../comment/comment.htm" title="${commodity.commodityDescription}" >
+						<img alt="${commodity.commodityDescription}" src="../images/${commodity.commodityAddressOfImage}"></a></p>
+						<p class="p-name"><a href="../comment/comment.htm" title="${commodity.commodityDescription}" >${commodity.commodityDescription}<span class="red"></span></a></p>
+						<p class="p-price"><b>Â¥${commodity.commodityPrice}</b></p>
+						<c:if test="${commodity.commodityIsRecommend == 1}">
+						<b class="p-tag"><img alt="" src="sell.png"></b>
+						</c:if>
 						<div class="p-button clearfix">
 							<table border="1">
 								<tbody>
 									<tr>
-									<td><a href="javascript:;" onClick="return showCartDialog();" class="p-button-cart"><span>¼ÓÈë¹ºÎï³µ</span></a></td>
-										<td><label class="p-button-score"><span id="numOfComment">0</span>ÈËÆÀ¼Û</label></td>
+									<td><a href="javascript:;" onClick="return showCartDialog();" class="p-button-cart"><span>åŠ å…¥è´­ç‰©è½¦</span></a></td>
+										<td><label class="p-button-score"><span id="numOfComment">${commodity.commodityNumberOfComment}</span>äººè¯„ä»·</label></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</li>
+				</c:forEach>
+			</c:if>
 			</ul>
 		</div>
-    </div><!-- 20140726-ÆµµÀ-ÁÐ±í-end -->
+    </div>
     
 </div>
 <div class="slogan-container">
     <div class="slogan">
-        <p>Copyright 0„8 2012-2018 Aha. All Rights Reserved.</p>
+        <p>Copyright Â© 2012-2018 Aha. All Rights Reserved.</p>
     </div>
 </div>
 </body>

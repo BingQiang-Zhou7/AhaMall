@@ -789,7 +789,7 @@
  height:18px;
  white-space:nowrap
 }
-.pro-cate-area .p-default a,.pro-cate-area .p-expand a {
+.pro-cate-area .p-default a,.pro-cate-area .p-expand a,.pro-cate-area .p-default b {
  color:#999;
  display:inline-block;
  *display:inline;
@@ -802,7 +802,7 @@
 .pro-cate-area .p-default a:active,.pro-cate-area .p-expand a:active {
  color:#333
 }
-.pro-cate-area .p-default .selected a,.pro-cate-area .p-expand .selected a {
+.selected b,.pro-cate-area .p-default .selected a,.pro-cate-area .p-expand .selected a {
  color:#e01d20
 }
 .pro-cate-sort .sort-sale,.pro-cate-sort .sort-price,.pro-cate-sort .sort-eval,.pro-cate-sort .sort-added {
@@ -1795,7 +1795,7 @@
  color:#007dff
 }
 .pro-popup-area {
- position: absolute;
+ position: fixed;
  width:428px;
  top:300px;
  left:40%;

@@ -10,9 +10,19 @@ public class Commodity {
 	public String commodityAddressOfImage;
 	public String commodityDescription;
 	public String commodityNumberOfComment;
+	public int commodityIsRecommend;
 	
+	public int getCommodityIsRecommend() {
+		return commodityIsRecommend;
+	}
+
+	public void setCommodityIsRecommend(int commodityIsRecommend) {
+		this.commodityIsRecommend = commodityIsRecommend;
+	}
+
 	public Commodity(String commodityID,String commodityName,String commodityType,int commodityPrice,
-			String commodityAddTime,String commodityAddressOfImage,String commodityDescription,String commodityNumberOfComment) 
+			String commodityAddTime,String commodityAddressOfImage,String commodityDescription,
+			String commodityNumberOfComment,int commodityIsRecommend) 
 	{
 		setCommodityID(commodityID);
 		setCommodityName(commodityName);
@@ -22,6 +32,7 @@ public class Commodity {
 		setCommodityAddressOfImage(commodityAddressOfImage);
 		setCommodityDescription(commodityDescription);
 		setCommodityNumberOfComment(commodityNumberOfComment);
+		setCommodityIsRecommend(commodityIsRecommend);
 	}
 
 	public String getCommodityID() {
