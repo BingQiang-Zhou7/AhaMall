@@ -1,8 +1,8 @@
 // JavaScript Document
-
 function showCartDialog(islogin) {
 	"use strict";
 	//alert(islogin);
+	//alert(commodityId,userphone);
 	if (islogin == "2") {
 		var iconTip = document.getElementById("IconTip");
 		var cartTip = document.getElementById("CartTip");

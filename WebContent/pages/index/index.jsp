@@ -1,3 +1,4 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.If"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="zhou.database.*"%>
 <%@page import="zhou.dao.*"%>
@@ -5,20 +6,49 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%
+	//当前URL
+	String url = request.getRequestURL().toString()+"?";
+	if(request.getQueryString() != null)
+	{
+		url+=request.getQueryString()+"&";	
+	}
+
 	// 获取商品信息
 	String categoryName = request.getParameter("categoryName");	
 	String sortName = request.getParameter("sortName");
 	String fuzzyStr = request.getParameter("fuzzyStr");
+	
+	
+	//获取加入购物车相关信息
+	String commodityId = request.getParameter("commodityID");
+	String userPhoneNum = request.getParameter("userPhoneNum");
+
+	if(commodityId != null && userPhoneNum != null)
+	{
+		new DataProcess(application.getInitParameter("DBName")).InsertcommodityToshoppingCart(userPhoneNum,commodityId,"1"); 
+	}
+	
+	if(categoryName != null && sortName != null)
+	{
+		session.setAttribute("categoryName", categoryName);
+		session.setAttribute("sortName", sortName);
+		session.setAttribute("fuzzyStr", fuzzyStr);
+	}
+	else
+	{
+		categoryName = (String)session.getAttribute("categoryName");
+		sortName = (String)session.getAttribute("sortName");
+		fuzzyStr = (String)session.getAttribute("fuzzyStr");
+	}
 	String logout = request.getParameter("logout");
 	ArrayList<Commodity> commodityList =null;
 	User user = (User)session.getAttribute("userInfo");
 	if(user != null)
 	{
-		session.removeAttribute("userInfo");
-		request.setAttribute("userInfo", user);
-		if(logout!= null && logout.equals("1"))
+//		System.out.println(logout);
+		if(logout != null && logout.equals("1"))
 		{
-			request.removeAttribute("userInfo");
+			session.setAttribute("userInfo",null);
 		}
 	}
 //	if(user != null)
@@ -73,11 +103,11 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                        <c:if test="${empty requestScope.userInfo}">
+				                        <c:if test="${empty sessionScope.userInfo}">
 				                            <a href="../login/login.htm">请登录</a>
 				                         </c:if>
-				                         <c:if test="${not empty requestScope.userInfo}">
-				                            ${requestScope.userInfo.userName}
+				                         <c:if test="${not empty sessionScope.userInfo}">
+				                            ${sessionScope.userInfo.userName}
 				                         </c:if>
 				                        </div>
 				                    </div>
@@ -85,11 +115,11 @@
 				             	<li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                        <c:if test="${empty requestScope.userInfo}">
+				                        <c:if test="${empty sessionScope.userInfo}">
 				                            <a href="../register/register.htm">注册</a>
 				                         </c:if>
-				                         <c:if test="${not empty requestScope.userInfo}">
-				                            <a href="../index/index.jsp?Logout=1">注销</a>
+				                         <c:if test="${not empty sessionScope.userInfo}">
+				                            <a href="../index/index.jsp?logout=1">注销</a>
 				                         </c:if>
 				                        </div>
 				                    </div>
@@ -104,7 +134,7 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../shoppingCart/shoppingCart.htm" class="icon-minicart">
+				                            <a href="../shoppingCart/shoppingCart.jsp" class="icon-minicart">
 				                                <span>购物车(<span id="header-cart-total">0</span>)</span>
 				                            </a>
 				                        </div>
@@ -236,11 +266,11 @@
 								<tbody>
 									<tr>
 									<td>
-									<c:if test="${not empty requestScope.userInfo}">
-									<a href="javascript:;" onClick="return showCartDialog(1);" class="p-button-cart"><span>加入购物车</span></a>
+									<c:if test="${not empty sessionScope.userInfo}">
+									<a href="<%=url%>commodityID=${commodity.commodityID}&userPhoneNum=<%=user.phoneNum%>&status=1"  class="p-button-cart"><span>加入购物车</span></a>
 									</c:if>
-									<c:if test="${empty requestScope.userInfo}">
-									<a href="javascript:;" onClick="return showCartDialog(2);" class="p-button-cart"><span>加入购物车</span></a>
+									<c:if test="${empty sessionScope.userInfo}">
+									<a href="javascript:;" onclick="return showCartDialog(2);" class="p-button-cart"><span>加入购物车</span></a>
 									</c:if>
 									</td>
 										<td><label class="p-button-score"><span id="numOfComment">${commodity.commodityNumberOfComment}</span>人评价</label></td>

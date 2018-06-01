@@ -1,7 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=GB18030"
+    pageEncoding="GB18030"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@page import="zhou.dao.*"  %>
+<%
+	String logout = request.getParameter("logout");
+	User user = (User)session.getAttribute("userInfo");
+	if(user != null)
+	{
+		if(logout != null && logout.equals("1"))
+		{
+			session.removeAttribute("userInfo");
+		}
+	}
+%>
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>我的购物车</title>
+<title>AhaMall Shopping Cart</title>
 <link href="ec.css" rel="stylesheet" type="text/css">
 <link href="index.css" rel="stylesheet" type="text/css">
 <link href="main.css" rel="stylesheet" type="text/css">
@@ -11,13 +26,7 @@
 <div class="header">
     <div class="layout">
         <div class="left">
-            <!-- 2017-02-15-logo-start -->
-            <div class="logo"><b style="font-size: 28px">是兄弟就来砍我</b></div>
-            <!-- 2017-02-15-logo-end -->
-            
-<!--             <div class="logo logo-word">
-                <span>我的购物车</span>
-            </div> -->
+            <div class="logo"><b style="font-size: 28px">AhaMall</b></div>
         </div>
     <div class="shortcut">
 		<div class="s-main " style="margin-top: 10px;">
@@ -25,32 +34,33 @@
                 <li>
                     <div class="s-dropdown">
                         <div class="h h-wide" id="header-toolbar-minicart">
-                            <a href="../login/login.htm">请登录</a>
+                            <c:if test="${empty sessionScope.userInfo}">
+	                            <a href="../login/login.htm">���¼</a>
+	                         </c:if>
+	                         <c:if test="${not empty sessionScope.userInfo}">
+	                            ${sessionScope.userInfo.userName}
+	                         </c:if>
                         </div>
                     </div>
                 </li>
              	<li>
                     <div class="s-dropdown">
                         <div class="h h-wide" id="header-toolbar-minicart">
-                            <a href="../register/register.htm">注册</a>
+                            <c:if test="${empty sessionScope.userInfo}">
+	                            <a href="../register/register.htm">ע��</a>
+	                         </c:if>
+	                         <c:if test="${not empty sessionScope.userInfo}">
+	                            <a href="../shoppingCart/shoppingCart.jsp?logout=1">ע��</a>
+	                         </c:if>
                         </div>
                     </div>
                 </li>
                 <li>
                     <div class="s-dropdown">
                         <div class="h h-wide" id="header-toolbar-minicart">
-                            <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
+                            <a href="../toBeDevelop/toBeDevelop.htm">�ҵĶ���</a>
                         </div>
                         </div>
-                </li>
-                <li>
-                    <div class="s-dropdown hide">
-                        <div class="h h-wide" id="header-toolbar-minicart">
-                            <a href="https://www.vmall.com/cart?t=15265688700701526568869970" class="icon-minicart" rel="nofollow" target="blank" onclick="pushMyCartMsg()">
-                                <span>购物车(<span id="header-cart-total">0</span>)</span>
-                            </a>
-                        </div>
-                    </div>
                 </li>
             </ul>
         </div>
@@ -58,54 +68,66 @@
 	</div>
 </div>
 <div class="layout">
-	    <!--20170721-未登录提醒-start -->
-    <div id="login-prompt-cart" class="login-prompt" style="">您还没有登录！登录后可查看之前加入的商品
-    	<a id="top-index-loginUrl" href="../login/login.htm">登录</a>
-    </div>
-    <!--20170721-未登录提醒-end -->
-    <div class="hr-20"></div>
+<!-- 
+	<c:if test="${empty sessionScope.userInfo}">
+        <div id="login-prompt-cart" class="login-prompt" style="">����û�е�¼����¼��ɲ鿴֮ǰ�������Ʒ
+   			<a id="top-index-loginUrl" href="../login/login.htm">��¼</a>
+   		</div>                   
+	</c:if>
+	<div class="hr-20"></div>
+ -->	
 <div class="sc-list">
+<c:if test="${empty sessionScope.userInfo}">
 	<div id="cart-empty-msg" class="sc-empty">
         	<span class="icon-minicart"></span>
-            <p>您的购物车里什么也没有哦~</p>
-            <a href="https://www.vmall.com">去逛逛</a>
+            <p>����û�е�¼����¼��ɲ鿴֮ǰ�������Ʒ~</p>
+            <a href="../login/login.jsp">��¼</a>
         </div>
-	<!--20170721-购物车-标题-start -->
+</c:if>
+<!-- TODO ���ﳵû����Ʒ -->
+<c:if test="${not empty sessionScope.userInfo}">
+	<div id="cart-empty-msg" class="sc-empty">
+        	<span class="icon-minicart"></span>
+            <p>���Ĺ��ﳵ��ʲôҲû��Ŷ~</p>
+            <a href="../index/index.jsp">��¼</a>
+        </div>
+</c:if>        
+<c:if test="${not empty sessionScope.userInfo}">
 		<div class="sc-pro-title clearfix" id="shopping-cart-product-list">
-			<label><i class="icon-choose-normal icon-choose-all icon-choose" id="checkAll-top"></i>全选</label>
+			<label><i class="icon-choose-normal icon-choose-all icon-choose" id="checkAll-top"></i>ȫѡ</label>
 			<ul class="clearfix">
-                <li>商品</li> 
-                <li>单价</li>
-                <li>数量</li>
-                <li>小计</li>
-                <li>操作</li>
+                <li>��Ʒ</li> 
+                <li>����</li>
+                <li>����</li>
+                <li>С��</li>
+                <li>����</li>
 			</ul>
 		</div>
-        <!--20170721-购物车-标题-end -->
+        <!--20170721-���ﳵ-����-end -->
         <form id="cart-form" autocomplete="off" method="get">
         	<input name="state" value="1" type="hidden">
         	<div id="cart-list"><!--product-list start-->
-        		<div class="sc-pro"><!--单品start-->
+        		<div class="sc-pro"><!--��Ʒstart-->
         			<input name="skuIds" value="10086431508342" type="hidden">
         			<input name="prdSbomCode" value="2601010038102" type="hidden">
         			<div class="sc-pro-list clearfix" id="order-pro-10086431508342">
         				<i class="icon-choose-normal " id="icon-choose-10086431508342" onclick="ec.shoppingCart.check(this);" >
         				</i>
         				<div class="sc-pro-area " id="sc-pro-area-10086431508342">
-        					<div class="sc-pro-main clearfix"><!--至灰时添加class="disabled"-->
-        							<img class="p-img" alt="荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通&nbsp;双卡双待&nbsp;高配版" src="1.jpg">
+        					<div class="sc-pro-main clearfix"><!--����ʱ����class="disabled"-->
+        							<img class="p-img" alt="��ҫ10&nbsp;AI��Ӱ�ֻ�&nbsp;6GB+64GB&nbsp;��Ӱ��&nbsp;ȫ��ͨ&nbsp;˫��˫��&nbsp;�����" src="1.jpg">
         							<span></span>
         						<ul>            
         							<li>            
-        								<p class="p-name">荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通&nbsp;双卡双待&nbsp;高配版</p>                
+        								<p class="p-name">��ҫ10&nbsp;AI��Ӱ�ֻ�&nbsp;6GB+64GB&nbsp;��Ӱ��&nbsp;ȫ��ͨ&nbsp;˫��˫��&nbsp;�����</p>                
         								<p class="p-sku" style="display: none;">
-        									<em>版本：全网通&nbsp;6GB+64GB</em>
-        									<em>颜色：幻影蓝</em>
+        									<em>�汾��ȫ��ͨ&nbsp;6GB+64GB</em>
+        									<em>��ɫ����Ӱ��</em>
         								</p>                        
         							</li>            
         							<li>                
         								<div class="p-price">            
-        									<span>¥&nbsp;2599.00</span>                
+        									<span>�0�6&nbsp;2599.00</span>                
         								</div>            
         							</li>            
         							<li>                
@@ -114,45 +136,46 @@
         										<input id="quantity-10086431508342" class="p-stock-text" value="1" data-skuid="10086431508342" data-type="1"  style="ime-mode: disabled;" type="text">
         										<p class="p-stock-btn" id="p-stock-btn-area">
         											<a id="pro-quantity-plus" href="javascript:;">+</a>
-        											<a id="pro-quantity-minus" href="javascript:;" class="disabled">−</a>
+        											<a id="pro-quantity-minus" href="javascript:;" class="disabled">�6�1</a>
         										</p>
         									</div>          
         								</div>
         								</li>            
-        								<li class="p-price-total" id="p-price-total-10086431508342">¥&nbsp;2599.00
+        								<li class="p-price-total" id="p-price-total-10086431508342">�0�6&nbsp;2599.00
         								</li>            
         								<li>
-        									<a href="javascript:;" class="p-del" onclick="ec.shoppingCart.del(this , 10086431508342,1)">删除
+        									<a href="javascript:;" class="p-del" onclick="ec.shoppingCart.del(this , 10086431508342,1)">ɾ��
         									</a>
         								</li>
         							</ul>
         						</div>
         						</div>
         					</div>
-        				</div><!-- 加价购列表--><!--单品end--><!--product-list end-->
+        				</div><!-- �Ӽ۹��б�--><!--��Ʒend--><!--product-list end-->
         			</div>
         		</form>
         <div id="locationForEnd"></div>
         <div id="center_balance" class="">
         	<div id="cart-total-area" class="sc-total-tool layout clearfix ">
         		<div class="sc-total-control">
-        			<label><i class="icon-choose-normal icon-choose-all" id="checkAll-buttom"></i>全选</label>
+        			<label><i class="icon-choose-normal icon-choose-all" id="checkAll-buttom"></i>ȫѡ</label>
         		</div>
         		<div class="sc-total-btn ">
-        			<a href="../toBeDevelop/toBeDevelop.htm" >立即结算</a>
+        			<a href="../toBeDevelop/toBeDevelop.htm" >��������</a>
         		</div>
         		<div class="sc-total-price">
-        			<p><label>总计：</label>
-        				<span id="sc-cartInfo-totalOriginalPrice">¥&nbsp;0.00</span>
+        			<p><label>�ܼƣ�</label>
+        				<span id="sc-cartInfo-totalOriginalPrice">�0�6&nbsp;0.00</span>
         			</p>
         	</div>
         </div>
    </div>
+</c:if>
 </div>
 </div>
 <div class="slogan-container">
     <div class="slogan">
-        <p>Copyright © 2012-2018 Aha. All Rights Reserved.</p>
+        <p>Copyright �0�8 2012-2018 Aha. All Rights Reserved.</p>
     </div>
 </div>
 </body>

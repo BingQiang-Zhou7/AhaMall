@@ -28,6 +28,7 @@ public class DataProcess {
 								resultSet.getString("description"),resultSet.getString("numofcomment"),resultSet.getInt("isRecommend")));
 			}
 			resultSet.close();
+			closeConnect();
 			if (commodityList.size() == 0) {
 				return null;
 			}
@@ -57,6 +58,7 @@ public class DataProcess {
 						);
 			}
 			resultSet.close();
+			closeConnect();
 			if (CommentList.size() == 0) {
 				return null;
 			}
@@ -65,6 +67,13 @@ public class DataProcess {
 			e.printStackTrace();
 			return null;
 		}	
+	}
+	
+	//获取商品评论
+	public void InsertcommodityToshoppingCart(String userPhoneNum,String commodityId,String numOfCommodity) {
+		Object[] parameter = new Object[] {userPhoneNum,commodityId,numOfCommodity};
+		dataAccess.DatabaseOperations("call InsertCommodityToShoppingCart(?,?,?)", parameter);
+		closeConnect();
 	}
 	
 	
@@ -84,14 +93,16 @@ public class DataProcess {
 //			System.out.println("----------------------------------------");
 //		}
 //		System.out.println(commodityList.size());
-		ArrayList<Comment> commentList = new DataProcess("AhaMall").getCommentInfo("xiaomi_005");
-		for (Comment comment : commentList) {
-			System.out.println(comment.getCommentConent());
-			System.out.println(comment.getCommentTime());
-			System.out.println(comment.getCommodityName());
-			System.out.println(comment.getUserPhoneNum());
-			System.out.println("----------------------------------------");
-		}
 		
+//		ArrayList<Comment> commentList = new DataProcess("AhaMall").getCommentInfo("xiaomi_005");
+//		for (Comment comment : commentList) {
+//			System.out.println(comment.getCommentConent());
+//			System.out.println(comment.getCommentTime());
+//			System.out.println(comment.getCommodityName());
+//			System.out.println(comment.getUserPhoneNum());
+//			System.out.println("----------------------------------------");
+//		}
+		new DataProcess("AhaMall").InsertcommodityToshoppingCart("13312341234","apple_001","1");
+		System.out.println("hello");
 	}
 }

@@ -2977,7 +2977,7 @@ html,a {
  font-size:14px
 }
 .sc-empty .icon-minicart {
- background:url("../../images/echannel/icon/icon-header-minicart.png") no-repeat;
+ background:url("nullcart.png") no-repeat;
  display:block;
  height:100px;
  margin:0 auto 36px;
