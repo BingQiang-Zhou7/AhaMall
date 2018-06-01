@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 31/05/2018 23:07:13
+ Date: 01/06/2018 22:04:54
 */
 
 SET NAMES utf8mb4;
@@ -106,14 +106,15 @@ DROP TABLE IF EXISTS `shoppingcart`;
 CREATE TABLE `shoppingcart`  (
   `userPhoneNum` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `commodityID` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `numOfCommodity` int(11) NULL DEFAULT NULL,
+  `numOfCommodity` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`userPhoneNum`, `commodityID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of shoppingcart
 -- ----------------------------
-INSERT INTO `shoppingcart` VALUES ('1', '1', 4);
+INSERT INTO `shoppingcart` VALUES ('13312341234', 'apple_001', '5');
+INSERT INTO `shoppingcart` VALUES ('13312341234', 'xiaomi_002', '2');
 
 -- ----------------------------
 -- Table structure for tableuser
@@ -135,11 +136,32 @@ INSERT INTO `tableuser` VALUES ('13312345678', '123234234234212312', '李四', '
 INSERT INTO `tableuser` VALUES ('13343214321', '131312313123131231', '王五', '12345678');
 
 -- ----------------------------
+-- Procedure structure for DeleteCommodityToShoppingCart
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `DeleteCommodityToShoppingCart`;
+delimiter ;;
+CREATE PROCEDURE `DeleteCommodityToShoppingCart`(IN `PhoneNum` varchar(11),IN `CommodityID` varchar(16),IN `NumOfCommodity` varchar(16))
+BEGIN
+IF CommodityID = "all" 
+THEN
+	DELETE FROM shoppingcart
+	WHERE shoppingcart.userPhoneNum = PhoneNum;
+ELSE
+	DELETE FROM shoppingcart
+	WHERE shoppingcart.commodityID = CommodityID AND shoppingcart.userPhoneNum = PhoneNum;
+END IF;
+
+
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for InsertCommodityToShoppingCart
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `InsertCommodityToShoppingCart`;
 delimiter ;;
-CREATE PROCEDURE `InsertCommodityToShoppingCart`(IN `PhoneNum` varchar(11),IN `CommodityID` varchar(16),IN `NumOfCommodity` INT)
+CREATE PROCEDURE `InsertCommodityToShoppingCart`(IN `PhoneNum` varchar(11),IN `CommodityID` varchar(16),IN `NumOfCommodity` varchar(16))
 BEGIN
 DECLARE i int ;
 select @i := COUNT(*) from shoppingcart where shoppingcart.userPhoneNum = PhoneNum AND shoppingcart.commodityID = CommodityID;
@@ -198,6 +220,20 @@ set sql_mode= 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISI
 		WHERE POSITION(inputstr in commodity.description)
 		or POSITION(inputstr in commodity.type)
 		or POSITION(inputstr in commodity.price);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for SortCommodityInShoppingCart
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `SortCommodityInShoppingCart`;
+delimiter ;;
+CREATE PROCEDURE `SortCommodityInShoppingCart`(IN `PhoneNum` varchar(11))
+BEGIN
+	SELECT * FROM shoppingcart
+	INNER JOIN commodity ON commodity.id = shoppingcart.commodityID
+	WHERE shoppingcart.userPhoneNum = PhoneNum;
 END
 ;;
 delimiter ;
@@ -333,6 +369,19 @@ ELSE
 		END CASE;
 	END IF;
 END IF;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for UpdateCommodityToShoppingCart
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `UpdateCommodityToShoppingCart`;
+delimiter ;;
+CREATE PROCEDURE `UpdateCommodityToShoppingCart`(IN `PhoneNum` varchar(11),IN `CommodityID` varchar(16),IN `NumOfCommodity` varchar(16))
+BEGIN
+	UPDATE shoppingcart SET shoppingcart.numOfCommodity=NumOfCommodity + shoppingcart.numOfCommodity
+	WHERE shoppingcart.userPhoneNum = PhoneNum AND shoppingcart.commodityID = CommodityID;
 END
 ;;
 delimiter ;
