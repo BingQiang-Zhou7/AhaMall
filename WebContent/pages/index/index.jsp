@@ -135,7 +135,7 @@
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
 				                            <a href="../shoppingCart/shoppingCart.jsp" class="icon-minicart">
-				                                <span>购物车(<span id="header-cart-total">0</span>)</span>
+				                                <span>购物车<span id="header-cart-total" class="hide">(0)</span></span>
 				                            </a>
 				                        </div>
 				                    </div>

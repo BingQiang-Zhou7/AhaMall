@@ -92,7 +92,7 @@
             <a href="../index/index.jsp">登录</a>
         </div>
 </c:if>        
-<c:if test="${not empty sessionScope.userInfo}">
+<c:if test="${empty sessionScope.userInfo}">
 		<div class="sc-pro-title clearfix" id="shopping-cart-product-list">
 			<label><i class="icon-choose-normal icon-choose-all icon-choose" id="checkAll-top"></i>全选</label>
 			<ul class="clearfix">
@@ -103,13 +103,9 @@
                 <li>操作</li>
 			</ul>
 		</div>
-        <!--20170721-购物车-标题-end -->
         <form id="cart-form" autocomplete="off" method="get">
-        	<input name="state" value="1" type="hidden">
         	<div id="cart-list"><!--product-list start-->
         		<div class="sc-pro"><!--单品start-->
-        			<input name="skuIds" value="10086431508342" type="hidden">
-        			<input name="prdSbomCode" value="2601010038102" type="hidden">
         			<div class="sc-pro-list clearfix" id="order-pro-10086431508342">
         				<i class="icon-choose-normal " id="icon-choose-10086431508342" onclick="ec.shoppingCart.check(this);" >
         				</i>
@@ -128,7 +124,16 @@
         							<li>                
         								<div class="p-price">            
         									<span>¥&nbsp;2599.00</span>                
-        								</div>            
+        								</div>
+        									<div id="popup-area" class="popup-area popup-define-area" style="position: absolute; top: -12px; left: 70%">
+        									<div class="b"><p>您确认要删除该商品吗？ </p> <div class="popup-button-area">
+        									<a href="javascript:;" class="button-action-yes"><span>是</span></a> 
+        									<a href="javascript:;" class="button-action-no"><span>否</span></a></div></div> 
+	        									<div class="f">
+	        									<b class="icon-arrow-down">
+	        									</b>
+	        									</div>
+        									</div>            
         							</li>            
         							<li>                
         								<div class="p-stock">
