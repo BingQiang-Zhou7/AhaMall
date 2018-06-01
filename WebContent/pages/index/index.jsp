@@ -26,14 +26,14 @@
 	request.removeAttribute("commodityList");
 	if(categoryName == null)
 	{
-		commodityList = new DataProcess().getCommodityInfo("全部", "默认", "false");
+		commodityList = new DataProcess(application.getInitParameter("DBName")).getCommodityInfo("全部", "默认", "false");
 	}
 	else
 	{
 //		System.out.println(categoryName);
 //		System.out.println(sortName);
 //		System.out.println(fuzzyStr);
-		commodityList = new DataProcess().getCommodityInfo(categoryName, sortName,fuzzyStr);
+		commodityList = new DataProcess(application.getInitParameter("DBName")).getCommodityInfo(categoryName, sortName,fuzzyStr);
 	}
 	//System.out.println(commodityList.size());
 	request.setAttribute("commodityList", commodityList);

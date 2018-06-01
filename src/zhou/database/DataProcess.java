@@ -8,7 +8,12 @@ import zhou.dao.Comment;
 import zhou.dao.Commodity;
 
 public class DataProcess {
-	DataAccess dataAccess = new DataAccess("AhaMall");
+	DataAccess dataAccess;
+	
+	public DataProcess(String dbName) {
+		dataAccess = new DataAccess(dbName);
+	}
+	
 	
 	// 获取商品信息
 	public ArrayList<Commodity> getCommodityInfo(String type,String sort,String fuzzy) {
@@ -79,7 +84,7 @@ public class DataProcess {
 //			System.out.println("----------------------------------------");
 //		}
 //		System.out.println(commodityList.size());
-		ArrayList<Comment> commentList = new DataProcess().getCommentInfo("xiaomi_005");
+		ArrayList<Comment> commentList = new DataProcess("AhaMall").getCommentInfo("xiaomi_005");
 		for (Comment comment : commentList) {
 			System.out.println(comment.getCommentConent());
 			System.out.println(comment.getCommentTime());

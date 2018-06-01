@@ -11,7 +11,7 @@
 	request.removeAttribute("commentList");
 	if(commodityID != null)
 	{
-		commentList = new DataProcess().getCommentInfo(commodityID);
+		commentList = new DataProcess(application.getInitParameter("DBName")).getCommentInfo(commodityID);
 	}
 	//System.out.println(commodityList.size());
 //	if(commentList != null)
