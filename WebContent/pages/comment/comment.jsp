@@ -7,6 +7,16 @@
 <%
 //获取商品信息
 	String commodityID = request.getParameter("commodityID");
+	User user = (User)session.getAttribute("userInfo");
+	String logout = request.getParameter("logout");
+	if(user != null)
+	{
+	//	System.out.println(logout);
+		if(logout != null && logout.equals("1"))
+		{
+			session.setAttribute("userInfo",null);
+		}
+	}
 	ArrayList<Comment> commentList =null;
 	request.removeAttribute("commentList");
 	if(commodityID != null)
@@ -48,14 +58,24 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
+				                        <c:if test="${empty sessionScope.userInfo}">
 				                            <a href="../login/login.htm">请登录</a>
+				                         </c:if>
+				                         <c:if test="${not empty sessionScope.userInfo}">
+				                            ${sessionScope.userInfo.userName}
+				                         </c:if>
 				                        </div>
 				                    </div>
 				                </li>
 				             	<li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
+				                        <c:if test="${empty sessionScope.userInfo}">
 				                            <a href="../register/register.htm">注册</a>
+				                         </c:if>
+				                         <c:if test="${not empty sessionScope.userInfo}">
+				                            <a href="../comment/comment.jsp?logout=1">注销</a>
+				                         </c:if>
 				                        </div>
 				                    </div>
 				                </li>
@@ -69,7 +89,7 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../shoppingCart/shoppingCart.htm" class="icon-minicart">
+				                            <a href="../shoppingCart/shoppingCart.jsp" class="icon-minicart">
 				                                <span>购物车(<span id="header-cart-total">0</span>)</span>
 				                            </a>
 				                        </div>

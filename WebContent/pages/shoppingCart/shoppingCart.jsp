@@ -156,7 +156,7 @@
         						</div>
         						</div>
         					</div>
-        				</div><!-- 加价购列表--><!--单品end--><!--product-list end-->
+        				</div>
         			</div>
         		</form>
         <div id="locationForEnd"></div>

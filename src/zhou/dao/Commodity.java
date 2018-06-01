@@ -11,7 +11,16 @@ public class Commodity {
 	public String commodityDescription;
 	public String commodityNumberOfComment;
 	public int commodityIsRecommend;
+	public String commodityNumber;
 	
+	public String getCommodityNumber() {
+		return commodityNumber;
+	}
+
+	public void setCommodityNumber(String commodityNumber) {
+		this.commodityNumber = commodityNumber;
+	}
+
 	public int getCommodityIsRecommend() {
 		return commodityIsRecommend;
 	}
@@ -22,7 +31,7 @@ public class Commodity {
 
 	public Commodity(String commodityID,String commodityName,String commodityType,int commodityPrice,
 			String commodityAddTime,String commodityAddressOfImage,String commodityDescription,
-			String commodityNumberOfComment,int commodityIsRecommend) 
+			String commodityNumberOfComment,int commodityIsRecommend,String commodityNumber) 
 	{
 		setCommodityID(commodityID);
 		setCommodityName(commodityName);
@@ -33,6 +42,7 @@ public class Commodity {
 		setCommodityDescription(commodityDescription);
 		setCommodityNumberOfComment(commodityNumberOfComment);
 		setCommodityIsRecommend(commodityIsRecommend);
+		setCommodityNumber(commodityNumber);
 	}
 
 	public String getCommodityID() {
