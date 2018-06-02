@@ -10,8 +10,8 @@
 	String numOfCommodity = request.getParameter("numOfCommodity");
 	//退出登录 以及 获取购物车商品信息
 	String logout = request.getParameter("logout");
-	String url = request.getRequestURI();//获取链接
-	User user = (User)session.getAttribute("userInfo");
+	String url = request.getRequestURI();//获取当前链接
+	User user = (User)session.getAttribute("userInfo");//获取用户信息
 	ArrayList<Commodity> commodityCart =null;
 	if(user != null)
 	{
@@ -20,14 +20,17 @@
 			session.removeAttribute("userInfo");
 		}
 		else{
+			//删除商品 以及清空购物车
 			if(commodityId != null && numOfCommodity == null)
 			{
 				new DataProcess(application.getInitParameter("DBName")).DeleteCommodityToShoppingCart(user.phoneNum, commodityId);
 			}
+			//加减商品
 			else if(commodityId != null && numOfCommodity != null && Integer.parseInt(numOfCommodity) > 0)
 			{
 				new DataProcess(application.getInitParameter("DBName")).UpdateCommodityToShoppingCart(user.phoneNum, commodityId, numOfCommodity);
 			}
+			//查询用户购物车商品
 			commodityCart = new DataProcess(application.getInitParameter("DBName")).getCartCommodityInfo(user.phoneNum);
 			request.setAttribute("commodityCart", commodityCart);
 //			for (Commodity commodity : commodityCart) {
