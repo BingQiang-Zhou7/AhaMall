@@ -1,15 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=GB18030"
     pageEncoding="GB18030"%>
-    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@page import="java.util.ArrayList"%>
+    <%@page import="zhou.database.*" %>
     <%@page import="zhou.dao.*"  %>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
+	//更新购物车商品数据
+	String commodityId = request.getParameter("commodityId");
+	String numOfCommodity = request.getParameter("numOfCommodity");
+	//退出登录 以及 获取购物车商品信息
 	String logout = request.getParameter("logout");
+	String url = request.getRequestURI();//获取链接
 	User user = (User)session.getAttribute("userInfo");
+	ArrayList<Commodity> commodityCart =null;
 	if(user != null)
 	{
 		if(logout != null && logout.equals("1"))
 		{
 			session.removeAttribute("userInfo");
+		}
+		else{
+			if(commodityId != null && numOfCommodity == null)
+			{
+				new DataProcess(application.getInitParameter("DBName")).DeleteCommodityToShoppingCart(user.phoneNum, commodityId);
+			}
+			else if(commodityId != null && numOfCommodity != null && Integer.parseInt(numOfCommodity) > 0)
+			{
+				new DataProcess(application.getInitParameter("DBName")).UpdateCommodityToShoppingCart(user.phoneNum, commodityId, numOfCommodity);
+			}
+			commodityCart = new DataProcess(application.getInitParameter("DBName")).getCartCommodityInfo(user.phoneNum);
+			request.setAttribute("commodityCart", commodityCart);
+//			for (Commodity commodity : commodityCart) {
+//				System.out.println(commodity.getCommodityID());
+//				System.out.println(commodity.getCommodityName());
+//				System.out.println(commodity.getCommodityType());
+//				System.out.println(commodity.getCommodityPrice());
+//				System.out.println(commodity.getCommodityAddressOfImage());
+//				System.out.println(commodity.getCommodityNumberOfComment());
+//				System.out.println(commodity.getCommodityAddTime());
+//				System.out.println(commodity.getCommodityDescription());
+//				System.out.println(commodity.getCommodityIsRecommend());
+//				System.out.println(commodity.getCommodityNumber());
+//				System.out.println("----------------------------------------");
+//			}
 		}
 	}
 %>
@@ -21,8 +54,10 @@
 <link href="index.css" rel="stylesheet" type="text/css">
 <link href="main.css" rel="stylesheet" type="text/css">
 <link href="style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="shoppingCart.js"></script>
 </head>
-<body class="wide sc">
+<body class="wide sc" onload="load();">
 <div class="header">
     <div class="layout">
         <div class="left">
@@ -58,6 +93,13 @@
                 <li>
                     <div class="s-dropdown">
                         <div class="h h-wide" id="header-toolbar-minicart">
+                            <a href="../index/index.jsp">商城主页</a>
+                        </div>
+                        </div>
+                </li>
+                <li>
+                    <div class="s-dropdown">
+                        <div class="h h-wide" id="header-toolbar-minicart">
                             <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
                         </div>
                         </div>
@@ -67,32 +109,25 @@
     </div>
 	</div>
 </div>
-<div class="layout">
-<!-- 
-	<c:if test="${empty sessionScope.userInfo}">
-        <div id="login-prompt-cart" class="login-prompt" style="">您还没有登录！登录后可查看之前加入的商品
-   			<a id="top-index-loginUrl" href="../login/login.htm">登录</a>
-   		</div>                   
-	</c:if>
-	<div class="hr-20"></div>
- -->	
+<div class="layout">	
 <div class="sc-list">
 <c:if test="${empty sessionScope.userInfo}">
 	<div id="cart-empty-msg" class="sc-empty">
         	<span class="icon-minicart"></span>
             <p>您还没有登录！登录后可查看之前加入的商品~</p>
-            <a href="../login/login.jsp">登录</a>
+            <a href="../login/login.htm">登录</a>
         </div>
 </c:if>
-<!-- TODO 购物车没有物品 -->
+<!-- TODO 购物车没有物品 -->     
 <c:if test="${not empty sessionScope.userInfo}">
+<c:if test="${empty requestScope.commodityCart}">
 	<div id="cart-empty-msg" class="sc-empty">
         	<span class="icon-minicart"></span>
             <p>您的购物车里什么也没有哦~</p>
-            <a href="../index/index.jsp">登录</a>
+            <a href="../index/index.jsp">去逛逛</a>
         </div>
-</c:if>        
-<c:if test="${empty sessionScope.userInfo}">
+</c:if>
+<c:if test="${not empty requestScope.commodityCart}">
 		<div class="sc-pro-title clearfix" id="shopping-cart-product-list">
 			<label><i class="icon-choose-normal icon-choose-all icon-choose" id="checkAll-top"></i>全选</label>
 			<ul class="clearfix">
@@ -103,54 +138,60 @@
                 <li>操作</li>
 			</ul>
 		</div>
+		<c:forEach items="${requestScope.commodityCart}" var="commodity">
         <form id="cart-form" autocomplete="off" method="get">
         	<div id="cart-list"><!--product-list start-->
         		<div class="sc-pro"><!--单品start-->
-        			<div class="sc-pro-list clearfix" id="order-pro-10086431508342">
-        				<i class="icon-choose-normal " id="icon-choose-10086431508342" onclick="ec.shoppingCart.check(this);" >
-        				</i>
-        				<div class="sc-pro-area " id="sc-pro-area-10086431508342">
-        					<div class="sc-pro-main clearfix"><!--至灰时添加class="disabled"-->
-        							<img class="p-img" alt="荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通&nbsp;双卡双待&nbsp;高配版" src="1.jpg">
-        							<span></span>
+        			<div class="sc-pro-list clearfix">
+        				<i class="icon-choose-normal icon-choose ${commodity.commodityID}"></i>
+        				<div class="sc-pro-area ">
+        					<div class="sc-pro-main clearfix">
+        							<img class="p-img" alt="${commodity.commodityDescription}" src="../images/${commodity.commodityAddressOfImage}">
         						<ul>            
         							<li>            
-        								<p class="p-name">荣耀10&nbsp;AI摄影手机&nbsp;6GB+64GB&nbsp;幻影蓝&nbsp;全网通&nbsp;双卡双待&nbsp;高配版</p>                
-        								<p class="p-sku" style="display: none;">
+        								<p class="p-name">${commodity.commodityDescription}</p>                
+        								<!-- <p class="p-sku" style="display: none;">
         									<em>版本：全网通&nbsp;6GB+64GB</em>
         									<em>颜色：幻影蓝</em>
-        								</p>                        
+        								</p>  
+        								-->                       
         							</li>            
         							<li>                
         								<div class="p-price">            
-        									<span>¥&nbsp;2599.00</span>                
-        								</div>
-        									<div id="popup-area" class="popup-area popup-define-area" style="position: absolute; top: -12px; left: 70%">
-        									<div class="b"><p>您确认要删除该商品吗？ </p> <div class="popup-button-area">
-        									<a href="javascript:;" class="button-action-yes"><span>是</span></a> 
-        									<a href="javascript:;" class="button-action-no"><span>否</span></a></div></div> 
-	        									<div class="f">
-	        									<b class="icon-arrow-down">
-	        									</b>
-	        									</div>
-        									</div>            
+        									<span>¥&nbsp;${commodity.commodityPrice}</span>                
+        								</div>         
         							</li>            
         							<li>                
         								<div class="p-stock">
         									<div class="p-stock-area">                    
-        										<input id="quantity-10086431508342" class="p-stock-text" value="1" data-skuid="10086431508342" data-type="1"  style="ime-mode: disabled;" type="text">
+        										<input class="p-stock-text ${commodity.commodityName}" value="${commodity.commodityNumber}"  style="ime-mode: disabled;" type="text">
         										<p class="p-stock-btn" id="p-stock-btn-area">
-        											<a id="pro-quantity-plus" href="javascript:;">+</a>
-        											<a id="pro-quantity-minus" href="javascript:;" class="disabled">−</a>
+        											<a class="pro-quantity-plus" 
+        											href="<%=url %>?commodityId=${commodity.commodityID}&numOfCommodity=${commodity.commodityNumber+1}">+</a>
+        											<a class="pro-quantity-minus ${commodity.commodityName} disabled" 
+        											href="<%=url %>?commodityId=${commodity.commodityID}&numOfCommodity=${commodity.commodityNumber-1}">−</a>
         										</p>
         									</div>          
         								</div>
         								</li>            
-        								<li class="p-price-total" id="p-price-total-10086431508342">¥&nbsp;2599.00
+        								<li class="p-price-total ${commodity.commodityID}">¥&nbsp;${ commodity.commodityNumber*commodity.commodityPrice}
         								</li>            
         								<li>
-        									<a href="javascript:;" class="p-del" onclick="ec.shoppingCart.del(this , 10086431508342,1)">删除
+        									<a href="javascript:;" class="p-del">删除
         									</a>
+        									<div id="popup-area" class="popup-area popup-define-area hide" style="position: absolute; top: -12px; left: 70%">
+        									<div class="b"><p>您确认要删除该商品吗？ </p> 
+        									<div class="popup-button-area">
+        									<a href="<%=url %>?commodityId=${commodity.commodityID}" class="button-action-yes">
+        									<span>是</span></a> 
+        									<a href="javascript:;" class="button-action-no"><span>否</span></a>
+        									</div>
+        									</div> 
+	        									<div class="f">
+	        									<b class="icon-arrow-down">
+	        									</b>
+	        									</div>
+        									</div>   
         								</li>
         							</ul>
         						</div>
@@ -159,21 +200,30 @@
         				</div>
         			</div>
         		</form>
+        </c:forEach>
+	</c:if>
         <div id="locationForEnd"></div>
-        <div id="center_balance" class="">
         	<div id="cart-total-area" class="sc-total-tool layout clearfix ">
         		<div class="sc-total-control">
-        			<label><i class="icon-choose-normal icon-choose-all" id="checkAll-buttom"></i>全选</label>
+        			<label><i class="icon-choose-normal icon-choose-all icon-choose" id="checkAll-buttom"></i>全选</label>
+        			<a href="javascript:;" class="p-del-all">清空购物车</a>
         		</div>
+        		<div id="popup-area" class="popup-area popup-define-area hide"  style="position: absolute;width: 20%;top:30%;left: 40%">
+						<div class="b"><p>您确认要清空购物车吗？ </p> 
+							<div class="popup-button-area">
+								<a href="<%=url %>?commodityId=all" class="button-action-yes"><span>是</span></a> 
+								<a href="javascript:;" class="button-action-no"><span>否</span></a>
+							</div>
+						</div> 
+					</div> 
         		<div class="sc-total-btn ">
         			<a href="../toBeDevelop/toBeDevelop.htm" >立即结算</a>
         		</div>
         		<div class="sc-total-price">
         			<p><label>总计：</label>
-        				<span id="sc-cartInfo-totalOriginalPrice">¥&nbsp;0.00</span>
+        				<span>¥&nbsp;<label id="sc-cartInfo-totalOriginalPrice">0.00</label></span>
         			</p>
         	</div>
-        </div>
    </div>
 </c:if>
 </div>

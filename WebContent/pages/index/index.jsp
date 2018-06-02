@@ -257,7 +257,7 @@
 						<img alt="${commodity.commodityDescription}" src="../images/${commodity.commodityAddressOfImage}"></a></p>
 						<p class="p-name"><a href="../comment/comment.jsp?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}"
 						 title="${commodity.commodityDescription}" >${commodity.commodityDescription}<span class="red"></span></a></p>
-						<p class="p-price"><b>¥${commodity.commodityPrice}</b></p>
+						<p class="p-price"><b>¥&nbsp;${commodity.commodityPrice}</b></p>
 						<c:if test="${commodity.commodityIsRecommend == 1}">
 						<b class="p-tag"><img alt="" src="sell.png"></b>
 						</c:if>

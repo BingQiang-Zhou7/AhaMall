@@ -121,12 +121,26 @@
         								</div>
         								</li>            
         								<li class="p-price-total">¥&nbsp;2599.00
-        									<div id="popup-area" class="popup-area popup-define-area" style="position: absolute; top: 0px; left: 70%"><div class="b"><p>您确认要删除该商品吗？ </p> <div class="popup-button-area"><a href="javascript:;" class="button-action-yes"><span>是</span></a> <a href="javascript:;" class="button-action-no"><span>否</span></a></div></div> 
+        									<div id="popup-area" class="popup-area popup-define-area hide" style="position: absolute; top: 0px; left: 70%"><div class="b"><p>您确认要删除该商品吗？ </p> <div class="popup-button-area"><a href="javascript:;" class="button-action-yes"><span>是</span></a> <a href="javascript:;" class="button-action-no"><span>否</span></a></div></div> 
         									<div class="f"><b class="icon-arrow-down"></b></div></div>
         								</li>            
         								<li>
         									<a href="javascript:;" class="p-del" onclick="ec.shoppingCart.del(this , 10086431508342,1)">删除
         									</a>
+        									<div id="popup-area" class="popup-area popup-define-area " style="position: fixed; top: 30%; left: 35%">
+											<div class="b"><p>您确认要清空购物车吗？ </p> 
+											<div class="popup-button-area">
+												<a href="<%=url %>?commodityId=${commodity.commodityID}" class="button-action-yes">
+												<span>是</span></a> 
+												<a href="javascript:;" class="button-action-no">
+												<span>否</span></a>
+											</div>
+											</div> 
+						<div class="f">
+							<b class="icon-arrow-down">
+							</b>
+						</div>
+					</div> 
         								</li>
         							</ul>
         						</div>
