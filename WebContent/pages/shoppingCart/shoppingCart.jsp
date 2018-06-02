@@ -53,6 +53,7 @@
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AhaMall Shopping Cart</title>
+<link rel="shortcut icon" href="../images/icon/aha64.ico">
 <link href="ec.css" rel="stylesheet" type="text/css">
 <link href="index.css" rel="stylesheet" type="text/css">
 <link href="main.css" rel="stylesheet" type="text/css">

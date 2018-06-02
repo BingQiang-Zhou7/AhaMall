@@ -14,9 +14,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GB18030">
+<link rel="shortcut icon" href="../images/icon/aha64.ico">
 <link rel="stylesheet" type="text/css" href="jump.css">
 <script src="jump.js"></script> 
-<title>正在跳转...</title>
+<title>Jumping...</title>
 </head>
 <body onload="load()">
     <div class="flex-container">
