@@ -51,7 +51,11 @@
 <div class="header">
     <div class="layout">
         <div class="left">
-            <div class="logo"><b style="font-size: 28px">AhaMall</b></div>
+            <div class="logo">
+            <a href="../index/index.jsp" title="AhaMall">
+            <img src="../images/icon/aha256.png" alt="AhaMall">
+            </a>
+            </div>
 				<div class="shortcut">
 					<div class="layout">
 						<div class="s-main " style="margin-top: 10px;">
