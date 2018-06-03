@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.If"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="zhou.database.*"%>
@@ -6,11 +7,23 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%
+	//退出登录
+	String logout = request.getParameter("logout");
+	ArrayList<Commodity> commodityList =null;
+	User user = (User)session.getAttribute("userInfo");
+	if(user != null)
+	{
+	//	System.out.println(logout);
+		if(logout != null && logout.equals("1"))
+		{
+			session.setAttribute("userInfo",null);
+		}
+	}
 	//当前URL
 	String url = request.getRequestURL().toString()+"?";
 	if(request.getQueryString() != null)
 	{
-		url+=request.getQueryString()+"&";	
+		url+=request.getQueryString()+"&";
 	}
 
 	// 获取商品信息
@@ -18,39 +31,28 @@
 	String sortName = request.getParameter("sortName");
 	String fuzzyStr = request.getParameter("fuzzyStr");
 	
-	
 	//获取加入购物车相关信息
 	String commodityId = request.getParameter("commodityID");
-	String userPhoneNum = request.getParameter("userPhoneNum");
 
-	if(commodityId != null && userPhoneNum != null)
+	if(commodityId != null)
 	{
-		new DataProcess(application.getInitParameter("DBName")).InsertcommodityToshoppingCart(userPhoneNum,commodityId,"1"); 
+		url = url.substring(0, url.indexOf("commodityID"));//清除URL商品信息
+		new DataProcess(application.getInitParameter("DBName")).InsertcommodityToshoppingCart(user.phoneNum,commodityId,"1"); 
 	}
 	
 	if(categoryName != null && sortName != null)
 	{
-		session.setAttribute("categoryName", categoryName);
-		session.setAttribute("sortName", sortName);
-		session.setAttribute("fuzzyStr", fuzzyStr);
+		request.setAttribute("categoryName", categoryName);
+		request.setAttribute("sortName", sortName);
+		request.setAttribute("fuzzyStr", fuzzyStr);
 	}
 	else
 	{
-		categoryName = (String)session.getAttribute("categoryName");
-		sortName = (String)session.getAttribute("sortName");
-		fuzzyStr = (String)session.getAttribute("fuzzyStr");
+		categoryName = (String)request.getAttribute("categoryName");
+		sortName = (String)request.getAttribute("sortName");
+		fuzzyStr = (String)request.getAttribute("fuzzyStr");
 	}
-	String logout = request.getParameter("logout");
-	ArrayList<Commodity> commodityList =null;
-	User user = (User)session.getAttribute("userInfo");
-	if(user != null)
-	{
-//		System.out.println(logout);
-		if(logout != null && logout.equals("1"))
-		{
-			session.setAttribute("userInfo",null);
-		}
-	}
+
 //	if(user != null)
 //	System.out.println(user.userName);
 	request.removeAttribute("commodityList");
@@ -272,7 +274,7 @@
 									<tr>
 									<td>
 									<c:if test="${not empty sessionScope.userInfo}">
-									<a href="<%=url%>commodityID=${commodity.commodityID}&userPhoneNum=<%=user.phoneNum%>&status=1"  class="p-button-cart"><span>加入购物车</span></a>
+									<a href="<%=url%>commodityID=${commodity.commodityID}&status=1"  class="p-button-cart"><span>加入购物车</span></a>
 									</c:if>
 									<c:if test="${empty sessionScope.userInfo}">
 									<a href="javascript:;" onclick="return showCartDialog(2);" class="p-button-cart"><span>加入购物车</span></a>

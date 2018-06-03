@@ -209,7 +209,6 @@
         			</div>
         		</form>
         </c:forEach>
-	</c:if>
         <div id="locationForEnd"></div>
         	<div id="cart-total-area" class="sc-total-tool layout clearfix ">
         		<div class="sc-total-control">
@@ -233,6 +232,7 @@
         			</p>
         	</div>
    </div>
+   	</c:if>
 </c:if>
 </div>
 </div>
