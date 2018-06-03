@@ -1,5 +1,3 @@
-<%@page import="java.net.URLDecoder"%>
-<%@page import="org.apache.jasper.tagplugins.jstl.core.If"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="zhou.database.*"%>
 <%@page import="zhou.dao.*"%>
