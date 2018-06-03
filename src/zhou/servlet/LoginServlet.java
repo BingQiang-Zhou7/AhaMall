@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 					//System.out.println(userPhoneNum);
 					db.colseConnect();
 					request.getSession().setAttribute("userInfo", user);
-					response.sendRedirect("pages/jsp/jump.jsp");
+					response.sendRedirect("pages/jump/jump.jsp");
 				}else {
 					db.colseConnect();
 					response.sendRedirect("pages/login/login.htm?error=UserIsExist");

@@ -49,7 +49,7 @@ public class FindPasswordServlet extends HttpServlet {
 					//System.out.println(resultSet.getInt(1));
 					if (resultSet.getInt(1) == 1) {
 						db.colseConnect();
-						response.sendRedirect("pages/jsp/jump.jsp");
+						response.sendRedirect("pages/jump/jump.jsp");
 					}else {
 						db.colseConnect();
 						response.sendRedirect("pages/findPassword/findPassword.htm?error=UserIsExist");

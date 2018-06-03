@@ -117,6 +117,18 @@
     </div>
 	</div>
 </div>
+	<div id="cart-tips" class="pro-popup-area" >
+		<div class="b" style="display: block;">
+			<div class="pro-add-success">
+				<dl>
+					<dt><b style="background-position:-34px 0; float: left;" id="IconTip"></b></dt>
+					<dd>
+						<div class="pro-add-success-msg" id="CartTip">¹ºÂò³É¹¦£¡</div>
+					</dd>
+				</dl>					
+			</div>
+		</div>
+	</div>
 <div class="layout">	
 <div class="sc-list">
 <c:if test="${empty sessionScope.userInfo}">

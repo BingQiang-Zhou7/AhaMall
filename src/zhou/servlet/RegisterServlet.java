@@ -57,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
 					System.out.println(resultSet.getInt(1));
 					if (resultSet.getInt(1) == 0) {
 						db.colseConnect();
-						response.sendRedirect("pages/jsp/jump.jsp");
+						response.sendRedirect("pages/jump/jump.jsp");
 					}else {
 						db.colseConnect();
 						response.sendRedirect("pages/register/register.htm?error=UserIsExist");
