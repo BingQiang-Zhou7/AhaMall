@@ -37,6 +37,4 @@ public class Comment {
 	public void setCommentTime(String commentTime) {
 		this.commentTime = commentTime;
 	}
-	
-	
 }

@@ -117,13 +117,13 @@
     </div>
 	</div>
 </div>
-	<div id="cart-tips" class="pro-popup-area" >
+	<div id="cart-tips" class="pro-popup-area hide">
 		<div class="b" style="display: block;">
 			<div class="pro-add-success">
 				<dl>
 					<dt><b style="background-position:-34px 0; float: left;" id="IconTip"></b></dt>
 					<dd>
-						<div class="pro-add-success-msg" id="CartTip">购买成功！</div>
+						<div class="pro-add-success-msg">购买成功！</div>
 					</dd>
 				</dl>					
 			</div>
@@ -235,8 +235,8 @@
 							</div>
 						</div> 
 					</div> 
-        		<div class="sc-total-btn ">
-        			<a href="../toBeDevelop/toBeDevelop.htm" >立即结算</a>
+        		<div class="sc-total-btn">
+        			<a href="javascript:return buyCommodity();" id="buyCommodity">立即结算</a>
         		</div>
         		<div class="sc-total-price">
         			<p><label>总计：</label>

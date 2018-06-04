@@ -10,7 +10,7 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <context-param>
-      <param-name>DBName</param-name>
-      <param-value>AhaMall</param-value>
+    <param-name>DBName</param-name>
+    <param-value>AhaMall</param-value>
   </context-param>
 </web-app>

@@ -151,6 +151,40 @@ $(document).ready(
 					$(this).parent().parent().parent().addClass("hide");
 				}
 				);
+		$("#buyCommodity").click(
+			function()
+			{
+				//alert("hello");
+				$("#cart-tips").removeClass("hide");
+				  var i = 3;
+				  //setInterval方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。
+				  var timer = setInterval(function(){
+					i--;
+					if(i==1){
+					  $("#cart-tips").addClass("hide");
+					}
+				  },1000);
+				  //获取商品id
+				  var commodity="";
+					$(".icon-choose-normal").each(function(){	
+						if ($(this).hasClass("icon-choose") && ! $(this).hasClass("icon-choose-all")) {
+							var myClass = $(this).attr("class");
+							var strs = myClass.split(" ");
+							for(var i = 0;i<strs.length;i++)
+								{
+									if(strs[i] != "icon-choose-normal" && strs[i] != "icon-choose")
+										{
+											myClass=strs[i];
+										}
+								}
+							commodity+=myClass+"-";
+						}
+					});
+					//alert(commodity);
+					location.href="../../BuyCommodityServlet?id="+commodity;
+				 // return false;
+			}
+		);
 	}
 );
 	
