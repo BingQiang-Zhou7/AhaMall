@@ -10,7 +10,7 @@ function load() {
 	    i--;
 	    sec.innerHTML = i;
 	    if(i==1){
-	  	  if (page == "login") {
+	  	  if (page1 == "login") {
 	    		window.location.href = "../login/login.htm";
 	  		}
 	    	else {
