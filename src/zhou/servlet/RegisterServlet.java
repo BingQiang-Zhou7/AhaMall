@@ -32,10 +32,14 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
 		String phoneNum = request.getParameter("phoneNum");
 		String userID = request.getParameter("userID");
 		String userName = request.getParameter("userName");
+		//String userName = new String(request.getParameter("userName").getBytes(), "UTF-8"); ;
 		String password = request.getParameter("pw1");
+		
+		System.out.println(userName);
 		
 //		request.getRequestDispatcher("pages/register/register.htm?error=UserIsExist").forward(request, response);
 //		PrintWriter out = response.getWriter();
@@ -57,7 +61,7 @@ public class RegisterServlet extends HttpServlet {
 					System.out.println(resultSet.getInt(1));
 					if (resultSet.getInt(1) == 0) {
 						db.colseConnect();
-						response.sendRedirect("pages/jump/jump.jsp");
+						response.sendRedirect("pages/jump/jump.jsp?topage=login");
 					}else {
 						db.colseConnect();
 						response.sendRedirect("pages/register/register.htm?error=UserIsExist");
