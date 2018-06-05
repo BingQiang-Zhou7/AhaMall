@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
 		//String userName = new String(request.getParameter("userName").getBytes(), "UTF-8"); ;
 		String password = request.getParameter("pw1");
 		
-		System.out.println(userName);
+		//System.out.println(userName);
 		
 //		request.getRequestDispatcher("pages/register/register.htm?error=UserIsExist").forward(request, response);
 //		PrintWriter out = response.getWriter();
@@ -58,7 +58,7 @@ public class RegisterServlet extends HttpServlet {
 				//System.out.println("nihao");
 				ResultSet resultSet = db.DatabaseOperations("Call InsertUserInfo(?,?,?,?)",list);
 				if (resultSet.next() == true) {
-					System.out.println(resultSet.getInt(1));
+					//System.out.println(resultSet.getInt(1));
 					if (resultSet.getInt(1) == 0) {
 						db.colseConnect();
 						response.sendRedirect("pages/jump/jump.jsp?topage=login");

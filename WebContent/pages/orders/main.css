@@ -51,7 +51,7 @@ html,a {
  background:url("../../images/echannel/icon/icon-order.png?20160918") no-repeat
 }
 body,button,input,select,textarea {
- font-family:arial,"微软雅黑";
+ font-family:arial,"寰蒋闆呴粦";
  line-height:1.2
 }
 .wide .u-1-5 {
@@ -1044,6 +1044,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  *zoom:1;
  height:50px;
  border-bottom:1px solid #dedede
+   background:#fff;
 }
 .section-header:before,.section-header:after {
  content:"";
@@ -2316,7 +2317,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
 .myOrder-control .inputbox span {
  font-size:14px;
  vertical-align:middle;
- font-family:tahoma,"微软雅黑"
+ font-family:tahoma,"寰蒋闆呴粦"
 }
 .myOrder-record,.myRecycle-record {
  width:100%;
@@ -2420,7 +2421,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .myOrder-record .list-group-item .o-pro tbody td.col-state,.myRecycle-record .list-group-item .o-pro tbody td.col-state,.myOrder-record .list-group-item .o-pro tbody td.col-quty,.myRecycle-record .list-group-item .o-pro tbody td.col-quty,.myOrder-record .list-group-item .o-pro tbody td.col-price,.myRecycle-record .list-group-item .o-pro tbody td.col-price,.myOrder-record .list-group-item .o-pro tbody td.col-pay,.myRecycle-record .list-group-item .o-pro tbody td.col-pay {
  color:#AAA
@@ -3796,7 +3797,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .order-detail-pro .order-pro-record .list-group-item .o-pro tbody td.col-state,.order-detail-pro .order-pro-record .list-group-item .o-pro tbody td.col-quty,.order-detail-pro .order-pro-record .list-group-item .o-pro tbody td.col-price,.order-detail-pro .order-pro-record .list-group-item .o-pro tbody td.col-pay {
  color:#AAA
@@ -3901,12 +3902,12 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
 }
 .order-detail-pro .order-pro-record table tbody td.col-dely p .inputbox span {
  vertical-align:middle;
- font-family:tahoma,"微软雅黑"
+ font-family:tahoma,"寰蒋闆呴粦"
 }
 .order-detail-pro .order-pro-record table tbody td.col-dely p .inputbox em {
  margin-left:10px;
  vertical-align:middle;
- font-family:tahoma,"微软雅黑"
+ font-family:tahoma,"寰蒋闆呴粦"
 }
 .order-detail-pro .order-pro-record table tbody td.end {
  border-right:1px solid #FFF!important
@@ -4645,7 +4646,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .myConcern-record .list-group-item .o-pro tbody td.col-state,.myConcern-record .list-group-item .o-pro tbody td.col-quty,.myConcern-record .list-group-item .o-pro tbody td.col-price,.myConcern-record .list-group-item .o-pro tbody td.col-pay {
  color:#AAA
@@ -5088,7 +5089,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .myEval-record .list-group-item .o-pro tbody td.col-state,.myEval-record .list-group-item .o-pro tbody td.col-quty,.myEval-record .list-group-item .o-pro tbody td.col-price,.myEval-record .list-group-item .o-pro tbody td.col-pay {
  color:#AAA
@@ -6171,7 +6172,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .order-edit-pro .order-pro-record .list-group-item .o-pro tbody td.col-state,.order-edit-pro .order-pro-record .list-group-item .o-pro tbody td.col-quty,.order-edit-pro .order-pro-record .list-group-item .o-pro tbody td.col-price,.order-edit-pro .order-pro-record .list-group-item .o-pro tbody td.col-pay {
  color:#AAA
@@ -6276,12 +6277,12 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
 }
 .order-edit-pro .order-pro-record table tbody td.col-dely p .inputbox span {
  vertical-align:middle;
- font-family:tahoma,"微软雅黑"
+ font-family:tahoma,"寰蒋闆呴粦"
 }
 .order-edit-pro .order-pro-record table tbody td.col-dely p .inputbox em {
  margin-left:10px;
  vertical-align:middle;
- font-family:tahoma,"微软雅黑"
+ font-family:tahoma,"寰蒋闆呴粦"
 }
 .order-edit-pro .order-pro-record table tbody td.end {
  border-right:1px solid #FFF!important
@@ -6910,7 +6911,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .myRes-record .list-group-item .o-pro tbody td.col-state,.myRes-record .list-group-item .o-pro tbody td.col-quty,.myRes-record .list-group-item .o-pro tbody td.col-price,.myRes-record .list-group-item .o-pro tbody td.col-pay {
  color:#AAA
@@ -8415,7 +8416,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .exchange-apply-form .exchange-apply-pro-record .list-group-item .o-pro tbody td.col-state,.exchange-apply-form .exchange-apply-pro-record .list-group-item .o-pro tbody td.col-quty,.exchange-apply-form .exchange-apply-pro-record .list-group-item .o-pro tbody td.col-price,.exchange-apply-form .exchange-apply-pro-record .list-group-item .o-pro tbody td.col-pay {
  color:#AAA
@@ -8495,7 +8496,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .exchange-apply-form .exchange-apply-pro-record .col-pro-info .p-gift-name a {
  color:#888
@@ -8703,7 +8704,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .exchange-apply-form .form-edit-panels .exchange-apply-pro-record .list-group-item .o-pro tbody td.col-state,.exchange-apply-form .form-edit-panels .exchange-apply-pro-record .list-group-item .o-pro tbody td.col-quty,.exchange-apply-form .form-edit-panels .exchange-apply-pro-record .list-group-item .o-pro tbody td.col-price,.exchange-apply-form .form-edit-panels .exchange-apply-pro-record .list-group-item .o-pro tbody td.col-pay {
  color:#AAA
@@ -8783,7 +8784,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .exchange-apply-form .form-edit-panels .exchange-apply-pro-record .col-pro-info .p-gift-name a {
  color:#888
@@ -8928,7 +8929,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
 .exchange-apply-articles .b li .inputbox span {
  font-size:14px;
  vertical-align:middle;
- font-family:tahoma,"微软雅黑"
+ font-family:tahoma,"寰蒋闆呴粦"
 }
 .exchange-apply-articles .b li .articles-record {
  padding:9px 0 0 23px;
@@ -8965,7 +8966,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
 }
 .exchange-apply-address .b .form-edit-panels .inputbox em {
  vertical-align:middle;
- font-family:tahoma,"微软雅黑";
+ font-family:tahoma,"寰蒋闆呴粦";
  margin-left:20px;
  color:#888
 }
@@ -9488,7 +9489,7 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
  font-weight:400;
  color:#ca151e;
  margin-right:5px;
- font-family:"微软雅黑"
+ font-family:"寰蒋闆呴粦"
 }
 .recycle-detail-pro .recycle-pro-record .list-group-item .o-pro tbody td.col-state,.recycle-detail-pro .recycle-pro-record .list-group-item .o-pro tbody td.col-quty,.recycle-detail-pro .recycle-pro-record .list-group-item .o-pro tbody td.col-price,.recycle-detail-pro .recycle-pro-record .list-group-item .o-pro tbody td.col-pay {
  color:#AAA
@@ -9593,12 +9594,12 @@ input.button-action-ok,input.button-action-cancel,input.button-action-save,input
 }
 .recycle-detail-pro .recycle-pro-record table tbody td.col-dely p .inputbox span {
  vertical-align:middle;
- font-family:tahoma,"微软雅黑"
+ font-family:tahoma,"寰蒋闆呴粦"
 }
 .recycle-detail-pro .recycle-pro-record table tbody td.col-dely p .inputbox em {
  margin-left:10px;
  vertical-align:middle;
- font-family:tahoma,"微软雅黑"
+ font-family:tahoma,"寰蒋闆呴粦"
 }
 .recycle-detail-pro .recycle-pro-record table tbody td.end {
  border-right:1px solid #FFF!important

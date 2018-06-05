@@ -54,7 +54,7 @@
 //	if(user != null)
 //	System.out.println(user.userName);
 	request.removeAttribute("commodityList");
-	if(categoryName == null)
+	if(categoryName == null||sortName == null||fuzzyStr == null)
 	{
 		commodityList = new DataProcess(application.getInitParameter("DBName")).getCommodityInfo("全部", "默认", "false");
 	}

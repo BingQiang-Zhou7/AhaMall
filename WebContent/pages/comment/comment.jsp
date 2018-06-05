@@ -15,6 +15,7 @@
 		if(logout != null && logout.equals("1"))
 		{
 			session.setAttribute("userInfo",null);
+			response.sendRedirect("../index/index.jsp");
 		}
 	}
 	ArrayList<Comment> commentList =null;
