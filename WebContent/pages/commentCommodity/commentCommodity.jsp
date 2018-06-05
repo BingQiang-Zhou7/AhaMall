@@ -4,9 +4,11 @@
 <%@ page language="java" contentType="text/html; charset=GB18030"
     pageEncoding="GB18030"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
 //获取商品信息
 	String commodityID = request.getParameter("commodityID");
+	String orderID = request.getParameter("orderID");
 	User user = (User)session.getAttribute("userInfo");
 	String logout = request.getParameter("logout");
 	if(user != null)
@@ -17,25 +19,8 @@
 			session.setAttribute("userInfo",null);
 		}
 	}
-	ArrayList<Comment> commentList =null;
-	request.removeAttribute("commentList");
-	if(commodityID != null)
-	{
-		commentList = new DataProcess(application.getInitParameter("DBName")).getCommentInfo(commodityID);
-	}
-	//System.out.println(commodityList.size());
-//	if(commentList != null)
-//	{		
-///		for (Comment comment : commentList) {
-//			System.out.println(comment.getCommentConent());
-//			System.out.println(comment.getCommentTime());
-//			System.out.println(comment.getCommodityName());
-//			System.out.println(comment.getUserPhoneNum());
-//			System.out.println("----------------------------------------");
-//		}
-//	}
-	
-	request.setAttribute("commentList", commentList);
+	Commodity commodity = new DataProcess(application.getInitParameter("DBName")).SearchCommodityByID(commodityID,orderID);
+	request.setAttribute("commodity", commodity);
 %>
 <!DOCTYPE html>
 <html><head>
@@ -45,6 +30,8 @@
 <link href="ec.css" rel="stylesheet" type="text/css">
 <link href="main.css" rel="stylesheet" type="text/css">
 <link href="style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="commentCommodity.js"></script>
 </head>
 <body class="wide detail" >
 <div class="header">
@@ -86,7 +73,7 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
+				                            <a href="../orders/orders.jsp">我的订单</a>
 				                        </div>
 				                        </div>
 				                </li>
@@ -94,7 +81,7 @@
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
 				                            <a href="../shoppingCart/shoppingCart.jsp" class="icon-minicart">
-				                                <span>购物车(<span id="header-cart-total">0</span>)</span>
+				                                <span>购物车</span>
 				                            </a>
 				                        </div>
 				                    </div>
@@ -107,30 +94,30 @@
 		</div>
 	</div>
 
-<form autocomplete="off" method="post">
     <div class="ce-post-area">
             <div class="" style="background: #f5f5f5">
                 <div class="">
                     <!-- 20141212-栏目-start -->
                     <div class="top-section-header">
                         <div class="layout clearfix">
-                            <div class="fl" id="orderInfo">  <h2>评价商品<span>订单编号：</span><b>8640027202</b></h2></div>
+                            <div class="fl" id="orderInfo">  <h2>评价商品<span>订单编号：</span><b>${commodity.orderID }</b></h2></div>
                             <div class="fr">
-                                <a class="button-operate-merge-pay" href="javascript:void(0);" onclick="ec.member.editRemark.submit()" id="remarkSubmit"><span>提交</span></a>
+                                <a class="button-operate-merge-pay" href="javascript:;" id="remarkSubmit"><span>提交</span></a>
                             </div>
                         </div>
                     </div>
                     <div class="myEval-detail-add layout">
-                        <div class="myEval-detail-tips red">请填写评价内容后，再提交！</div>
+                        <div class="myEval-detail-tips red hide" id="commodityTip">请填写评价内容后，再提交！</div>
                         <ul id="productList">
                         <li class="clearfix  " id="li-10113020401701">
                         <div class="myEval-pro fl">
                         <p class="p-img">
-                        <a href=""><img id="img-10113020401701" title="图片" alt="图片" src=""></a>
+                        <a href="../comment/comment.jsp?commodityID=${commodity.commodityID}">
+                        <img id="img-10113020401701" title="${commodity.commodityDescription}" alt="${commodity.commodityDescription}" src="../images/${commodity.commodityAddressOfImage}"></a>
                         </p>
                         <p class="p-name" id="name-10113020401701">
-                        <a href="">华为 HUAWEI 电源适配器 华为快充 兼容9V2A 5V2A 手机充电器 USB充电头（白色）</a></p>
-                        <p class="p-price" id="price-10113020401701">¥69.00</p>
+                        <a href="../comment/comment.jsp?commodityID=${commodity.commodityID}">${commodity.commodityDescription}</a></p>
+                        <p class="p-price" id="price-10113020401701">¥&nbsp;${commodity.commodityPrice}</p>
                         </div>
                         <div class="myEval-form fr">
                         <div class="form-edit-panels">
@@ -141,13 +128,21 @@
                          <th></th></tr>
                          <tr class="tr-rel">
                          <th class="vat">
-                         <label for="">评价</label>
+                         <label>评价</label>
                          </th>
                          <td>
-                         <textarea maxlength="255" placeholder="评价在10字以上就有机会获得神秘礼物一份" class="textarea">nice 很不错。</textarea>
+                         <c:if test="${empty commodity.commentContent}">
+                         <textarea maxlength="255" placeholder="评价在10字以上就有机会获得神秘礼物一份" class="textarea" onchange="changeText();">nice 很不错。</textarea>
                          <div class="count fr">
-                         <span>评论字数不超过255个字</span>
+                         <span class="WordNum">9</span>&nbsp;/&nbsp;255
+                         </div>
+                         </c:if>
+                          <c:if test="${not empty commodity.commentContent}">
+                          <textarea maxlength="255" placeholder="评价在10字以上就有机会获得神秘礼物一份" class="textarea" onchange="changeText();">${commodity.commentContent}</textarea>
+                          <div class="count fr">
+                         <span class="WordNum">${fn:length(commodity.commentContent)}</span>&nbsp;/&nbsp;255
                          </div> 
+                          </c:if>
                          </td>
                          </tr>	                                                                
                          </tbody>
@@ -162,7 +157,6 @@
                 <div class="hr-40"></div>
             </div>
         </div>
-</form>
 
 <div class="slogan-container">
     <div class="slogan">

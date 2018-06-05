@@ -87,7 +87,7 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
+				                            <a href="../orders/orders.jsp">我的订单</a>
 				                        </div>
 				                        </div>
 				                </li>
@@ -112,7 +112,7 @@
     <div class="layout">
             <div class="breadcrumb-area fcn" style="color: #333333; float: left;">
             <a href="../index/index.jsp">首页</a>&nbsp;&gt;&nbsp;
-        <span>${param.commodityName}</span>
+        <span>${commentList[0].commodityName}</span>
     </div>
     </div>
 		</div>

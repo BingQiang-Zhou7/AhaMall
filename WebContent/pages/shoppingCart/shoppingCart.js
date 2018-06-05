@@ -155,15 +155,7 @@ $(document).ready(
 			function()
 			{
 				//alert("hello");
-				$("#cart-tips").removeClass("hide");
-				  var i = 3;
-				  //setInterval方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。
-				  var timer = setInterval(function(){
-					i--;
-					if(i==1){
-					  $("#cart-tips").addClass("hide");
-					}
-				  },1000);
+				$("#NoSelectTip").addClass("hide");
 				  //获取商品id
 				  var commodity="";
 					$(".icon-choose-normal").each(function(){	
@@ -180,9 +172,24 @@ $(document).ready(
 							commodity+=myClass+"-";
 						}
 					});
+					if (commodity == "") {
+						$("#NoSelectTip").removeClass("hide");
+					}
+					else
+						{
+							$("#cart-tips").removeClass("hide");
+							  var i = 3;
+							  //setInterval方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。
+							  var timer = setInterval(function(){
+								i--;
+								if(i==1){
+								  $("#cart-tips").addClass("hide");
+								}
+							  },1000);
+							location.href="../../BuyCommodityServlet?id="+commodity;
+						}
 					//alert(commodity);
-					location.href="../../BuyCommodityServlet?id="+commodity;
-				 // return false;
+				 return false;
 			}
 		);
 	}

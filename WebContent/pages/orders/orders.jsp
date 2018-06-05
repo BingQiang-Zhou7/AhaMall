@@ -17,12 +17,15 @@
 			session.setAttribute("userInfo",null);
 		}
 	}
-	ArrayList<Comment> commentList =null;
-	request.removeAttribute("commentList");
-	if(commodityID != null)
-	{
-		commentList = new DataProcess(application.getInitParameter("DBName")).getCommentInfo(commodityID);
-	}
+	ArrayList<Order> orders = new DataProcess(application.getInitParameter("DBName")).getOrderList(user.phoneNum);
+	
+	
+//	ArrayList<Comment> commentList =null;
+//	request.removeAttribute("commentList");
+//	if(commodityID != null)
+//	{
+//		commentList = new DataProcess(application.getInitParameter("DBName")).getCommentInfo(commodityID);
+//	}
 	//System.out.println(commodityList.size());
 //	if(commentList != null)
 //	{		
@@ -35,7 +38,7 @@
 //		}
 //	}
 	
-	request.setAttribute("commentList", commentList);
+	request.setAttribute("orderList", orders);
 %>
 <!DOCTYPE html>
 <html><head>
@@ -78,15 +81,15 @@
 				                            <a href="../register/register.htm">注册</a>
 				                         </c:if>
 				                         <c:if test="${not empty sessionScope.userInfo}">
-				                            <a href="../comment/comment.jsp?logout=1">注销</a>
+				                            <a href="../index/index.jsp?logout=1">注销</a>
 				                         </c:if>
 				                        </div>
 				                    </div>
 				                </li>
 				                <li>
 				                    <div class="s-dropdown">
-				                        <div class="h h-wide" >
-				                            <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
+				                        <div class="h h-wide" id="header-toolbar-minicart">
+				                            <a href="../index/index.jsp">商城主页</a>
 				                        </div>
 				                        </div>
 				                </li>
@@ -106,76 +109,80 @@
 			</div>
 		</div>
 	</div>
-	<div id="base_index" class="">
-
 <div class="hr-10"></div>
 <div class="g">
-<div class="section-header">
-    <div class="fl">
-        <h2><span>我的订单</span></h2>
-    </div>
+	<div class="section-header">
+	    <div class="fl">
+	        <h2><span>我的订单</span></h2>
+	    </div>
+	</div>
+	<div class="hr-10"></div>
+	<c:if test="${not empty requestScope.orderList}">
+	<div class="myOrder-record" id="myOrders-list-content">
+		<div class="list-group-title">
+			<table >
+				<thead>
+					<tr>
+						<th class="col-pro">商品</th>
+						<th class="col-price">单价/元</th>
+						<th class="col-quty">数量</th>
+						<th class="col-pay">实付款/元</th>
+						<th class="col-operate">订单状态及操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<c:forEach items="${requestScope.orderList}" var="order">
+		<div class="list-group" id="list-group">
+			<div class="list-group-item">
+				<div class="o-info">
+					<div class="col-info">
+						<span class="o-date">${order.payTime}</span>
+						<span class="o-no">订单号：<em>${order.orderID}</em></span>
+						<span class="o-logistics"></span>
+					</div>
+					<div class="col-state">已完成&nbsp;|&nbsp;已付款</div>
+				</div>
+				<div class="o-pro">
+					<table>
+						<tbody>
+		<c:forEach items="${order.commodities}" var="commodity">
+						<tr>
+							<td class="col-pro-img">
+								<p class="p-img">
+								<a title="" href="../comment/comment.jsp?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}">
+									<img class="nocomment-10113020401701" alt="${commodity.commodityDescription}" src="../images/${commodity.commodityAddressOfImage}"></a></p>
+								</td>
+							<td class="col-pro-info">
+								<p class="p-name">
+								<a title="${commodity.commodityDescription}" class="nocomment-10113020401701" href="../comment/comment.jsp?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}">${commodity.commodityDescription}</a></p>
+							</td>
+							<td class="col-price"><em>¥</em><span>${commodity.commodityPrice}</span></td>
+							<td class="col-quty">${commodity.commodityNumber}</td><td rowspan="1" class="col-pay">
+								<p><em>¥</em><span>${commodity.commodityNumber * commodity.commodityPrice}</span></p></td>
+							<td rowspan="1" class="col-operate" style="color: #ca141d;">
+							<p class="p-button">
+								<a class="button-operate-revie pl-10113020401701" href="../commentCommodity/commentCommodity.jsp?commodityID=${commodity.commodityID}&orderID=${order.orderID}" >
+								<span>我要评论</span></a>
+							</p>
+							<!-- 
+							<p class="p-link"><a href="javascript:;" onclick="ec.member.orderList.del(this,'8640027202');">删除订单</a></p>
+							 -->
+							</td>
+						</tr>
+		</c:forEach>
+					</tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+		</c:forEach>
+			<div class="list-group-page">
+				<div class="pager" id="list-pager"></div>
+			</div>
+		</div>
+		</c:if>
 </div>
-<div class="hr-10"></div>
-<div class="myOrder-record" id="myOrders-list-content">
-	<div class="list-group-title">
-		<table >
-			<thead>
-				<tr>
-					<th class="col-pro">商品</th>
-					<th class="col-price">单价/元</th>
-					<th class="col-quty">数量</th>
-					<th class="col-pay">实付款/元</th>
-					<th class="col-operate">订单状态及操作</th>
-				</tr>
-			</thead>
-		</table>
-	</div>
-
-	<div class="list-group" id="list-group">
-	<div class="list-group-item">
-	<div class="o-info">
-	<div class="col-info">
-	<span class="o-date">2015-12-01&nbsp;&nbsp;00:11</span>
-	<span class="o-no">订单号：
-	<a href="https://www.vmall.com/member/order-8640027202?isHisData=0" title="8640027202">8640027202</a>
-	</span><span class="o-logistics">
-	</span>
-	</div>
-	<div class="col-state">已完成&nbsp;|&nbsp;已付款</div>
-	</div>
-	<div class="o-pro">
-	<table>
-	<tbody>
-	
-	<tr><td class="col-pro-img">
-	<p class="p-img">
-	<a title="【荣耀7送福利活动】华为 HUAWEI 电源适配器 华为快充 兼容9V2A 5V2A 手机充电器 USB充电头（白色）" href="" onclick="pushProMsg(6106,'300130101')">
-	<img class="nocomment-10113020401701" alt="【荣耀7送福利活动】华为 HUAWEI 电源适配器 华为快充 兼容9V2A 5V2A 手机充电器 USB充电头（白色）" src=""></a></p>
-	</td>
-	<td class="col-pro-info">
-	<p class="p-name">
-	<a title="【荣耀7送福利活动】华为 HUAWEI 电源适配器 华为快充 兼容9V2A 5V2A 手机充电器 USB充电头（白色）" class="nocomment-10113020401701" href="">【荣耀7送福利活动】华为 HUAWEI 电源适配器 华为快充 兼容9V2A 5V2A 手机充电器 USB充电头（白色）</a></p>
-	</td><td class="col-price"><em>¥</em><span>69.00</span></td>
-	<td class="col-quty">1</td><td rowspan="1" class="col-pay">
-	<p><em>¥</em><span>7.00</span></p><p><em>支付宝</em></p></td>
-	<td rowspan="1" class="col-operate" style="color: #ca141d;"><p class="p-button">
-	<a class="button-operate-revie pl-10113020401701" href="javascript:;" ><span>我要评论</span></a></p>
-	<p class="p-link"><a href="javascript:;" onclick="ec.member.orderList.del(this,'8640027202');">删除订单</a></p>
-	</td>
-	</tr>
-
-	</tbody>
-	</table>
-	</div>
-	</div></div>
-
-	<div class="list-group-page">
-		<div class="pager" id="list-pager"></div>
-	</div>
-</div>
-</div>
-</div>
-
 <div class="slogan-container">
     <div class="slogan">
         <p>Copyright © 2012-2018 Aha. All Rights Reserved.</p>

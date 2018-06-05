@@ -129,13 +129,15 @@
 				                        </div>
 				                    </div>
 				                </li>
+				                <c:if test="${not empty sessionScope.userInfo}">
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
+				                            <a href="../orders/orders.jsp">我的订单</a>
 				                        </div>
 				                        </div>
 				                </li>
+				                </c:if>
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
@@ -257,10 +259,10 @@
 				<c:forEach items="${requestScope.commodityList}" var="commodity" >
 				<li>
 					<div class="pro-panels">
-						<p class="p-img"><a  href="../comment/comment.jsp?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}" 
+						<p class="p-img"><a  href="../comment/comment.jsp?commodityID=${commodity.commodityID}" 
 						title="${commodity.commodityDescription}" >
 						<img alt="${commodity.commodityDescription}" src="../images/${commodity.commodityAddressOfImage}"></a></p>
-						<p class="p-name"><a href="../comment/comment.jsp?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}"
+						<p class="p-name"><a href="../comment/comment.jsp?commodityID=${commodity.commodityID}"
 						 title="${commodity.commodityDescription}" >${commodity.commodityDescription}<span class="red"></span></a></p>
 						<p class="p-price"><b>¥&nbsp;${commodity.commodityPrice}</b></p>
 						<c:if test="${commodity.commodityIsRecommend == 1}">

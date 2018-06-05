@@ -13,22 +13,10 @@ public class Commodity {
 	public int commodityIsRecommend;
 	public String commodityNumber;
 	
-	public String getCommodityNumber() {
-		return commodityNumber;
-	}
-
-	public void setCommodityNumber(String commodityNumber) {
-		this.commodityNumber = commodityNumber;
-	}
-
-	public int getCommodityIsRecommend() {
-		return commodityIsRecommend;
-	}
-
-	public void setCommodityIsRecommend(int commodityIsRecommend) {
-		this.commodityIsRecommend = commodityIsRecommend;
-	}
-
+	public String commentContent;
+	public String commentTime;
+	public String orderID;
+	
 	public Commodity(String commodityID,String commodityName,String commodityType,int commodityPrice,
 			String commodityAddTime,String commodityAddressOfImage,String commodityDescription,
 			String commodityNumberOfComment,int commodityIsRecommend,String commodityNumber) 
@@ -43,6 +31,48 @@ public class Commodity {
 		setCommodityNumberOfComment(commodityNumberOfComment);
 		setCommodityIsRecommend(commodityIsRecommend);
 		setCommodityNumber(commodityNumber);
+	}
+	
+	
+	
+	public String getCommentContent() {
+		return commentContent;
+	}
+
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
+	}
+
+	public String getCommentTime() {
+		return commentTime;
+	}
+
+	public void setCommentTime(String commentTime) {
+		this.commentTime = commentTime;
+	}
+
+	public String getOrderID() {
+		return orderID;
+	}
+
+	public void setOrderID(String orderID) {
+		this.orderID = orderID;
+	}
+
+	public String getCommodityNumber() {
+		return commodityNumber;
+	}
+
+	public void setCommodityNumber(String commodityNumber) {
+		this.commodityNumber = commodityNumber;
+	}
+
+	public int getCommodityIsRecommend() {
+		return commodityIsRecommend;
+	}
+
+	public void setCommodityIsRecommend(int commodityIsRecommend) {
+		this.commodityIsRecommend = commodityIsRecommend;
 	}
 
 	public String getCommodityID() {

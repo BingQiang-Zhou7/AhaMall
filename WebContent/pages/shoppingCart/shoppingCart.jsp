@@ -105,13 +105,15 @@
                         </div>
                         </div>
                 </li>
+                <c:if test="${not empty sessionScope.userInfo}">
                 <li>
                     <div class="s-dropdown">
-                        <div class="h h-wide" id="header-toolbar-minicart">
-                            <a href="../toBeDevelop/toBeDevelop.htm">我的订单</a>
+                        <div class="h h-wide" >
+                            <a href="../orders/orders.jsp">我的订单</a>
                         </div>
                         </div>
                 </li>
+                </c:if>
             </ul>
         </div>
     </div>
@@ -129,7 +131,8 @@
 			</div>
 		</div>
 	</div>
-<div class="layout">	
+<div class="layout">
+<div class="myEval-detail-tips red hide" id="NoSelectTip">请选择商品后，再结算！</div>	
 <div class="sc-list">
 <c:if test="${empty sessionScope.userInfo}">
 	<div id="cart-empty-msg" class="sc-empty">
@@ -236,7 +239,7 @@
 						</div> 
 					</div> 
         		<div class="sc-total-btn">
-        			<a href="javascript:return buyCommodity();" id="buyCommodity">立即结算</a>
+        			<a href="javascript:;" id="buyCommodity">立即结算</a>
         		</div>
         		<div class="sc-total-price">
         			<p><label>总计：</label>

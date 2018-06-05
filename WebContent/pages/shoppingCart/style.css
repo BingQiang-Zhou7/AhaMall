@@ -32,3 +32,12 @@
     margin: 19px 0 0 19px;
     background: transparent url(icon33.png) scroll no-repeat;
 }
+
+.myEval-detail-tips {
+    font-size: 16px;
+    position: relative;
+    top:7px;
+    text-align: center;
+    background: #f5f5f5;
+    min-height: 27px;
+}
