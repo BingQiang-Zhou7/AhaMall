@@ -14,7 +14,7 @@ function load() {
 	    		window.location.href = "../login/login.htm";
 	  		}
 	    	else {
-	    		 window.location.href = "../index/index.jsp";
+	    		 window.location.href = "../../IndexServlet";
 	  		}
 	    }
 	  },1000);

@@ -38,7 +38,7 @@
     <div class="layout">
         <div class="left">
             <div class="logo">
-            <a href="../index/index.jsp" title="AhaMall">
+            <a href="../../IndexServlet" title="AhaMall">
             <img src="../images/icon/aha256.png" alt="AhaMall">
             </a>
             </div>
@@ -65,7 +65,7 @@
 				                            <a href="../register/register.htm">×¢²á</a>
 				                         </c:if>
 				                         <c:if test="${not empty sessionScope.userInfo}">
-				                            <a href="../comment/comment.jsp?logout=1">×¢Ïú</a>
+				                            <a href="../../IndexServlet?logout=1">×¢Ïú</a>
 				                         </c:if>
 				                        </div>
 				                    </div>

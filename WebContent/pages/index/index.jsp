@@ -1,104 +1,25 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="zhou.database.*"%>
-<%@page import="zhou.dao.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%
-	//退出登录
-	String logout = request.getParameter("logout");
-	ArrayList<Commodity> commodityList =null;
-	User user = (User)session.getAttribute("userInfo");
-	if(user != null)
-	{
-	//	System.out.println(logout);
-		if(logout != null && logout.equals("1"))
-		{
-			session.setAttribute("userInfo",null);
-		}
-	}
-	//当前URL
-	String url = request.getRequestURL().toString()+"?";
-	if(request.getQueryString() != null)
-	{
-		url+=request.getQueryString()+"&";
-	}
-
-	// 获取商品信息
-	String categoryName = request.getParameter("categoryName");	
-	String sortName = request.getParameter("sortName");
-	String fuzzyStr = request.getParameter("fuzzyStr");
-	
-	//获取加入购物车相关信息
-	String commodityId = request.getParameter("commodityID");
-
-	if(commodityId != null)
-	{
-		url = url.substring(0, url.indexOf("commodityID"));//清除URL商品信息
-		new DataProcess(application.getInitParameter("DBName")).InsertcommodityToshoppingCart(user.phoneNum,commodityId,"1"); 
-	}
-	
-	if(categoryName != null && sortName != null)
-	{
-		request.setAttribute("categoryName", categoryName);
-		request.setAttribute("sortName", sortName);
-		request.setAttribute("fuzzyStr", fuzzyStr);
-	}
-	else
-	{
-		categoryName = (String)request.getAttribute("categoryName");
-		sortName = (String)request.getAttribute("sortName");
-		fuzzyStr = (String)request.getAttribute("fuzzyStr");
-	}
-
-//	if(user != null)
-//	System.out.println(user.userName);
-	request.removeAttribute("commodityList");
-	if(categoryName == null||sortName == null||fuzzyStr == null)
-	{
-		commodityList = new DataProcess(application.getInitParameter("DBName")).getCommodityInfo("全部", "默认", "false");
-	}
-	else
-	{
-//		System.out.println(categoryName);
-//		System.out.println(sortName);
-//		System.out.println(fuzzyStr);
-		commodityList = new DataProcess(application.getInitParameter("DBName")).getCommodityInfo(categoryName, sortName,fuzzyStr);
-	}
-	//System.out.println(commodityList.size());
-	request.setAttribute("commodityList", commodityList);
-//	for (Commodity commodity : commodityList) {
-//		System.out.println(commodity.getCommodityID());
-//		System.out.println(commodity.getCommodityName());
-//		System.out.println(commodity.getCommodityType());
-//		System.out.println(commodity.getCommodityPrice());
-//		System.out.println(commodity.getCommodityAddressOfImage());
-//		System.out.println(commodity.getCommodityNumberOfComment());
-//		System.out.println(commodity.getCommodityAddTime());
-//		System.out.println(commodity.getCommodityDescription());
-//		System.out.println("----------------------------------------");
-//	}
-//	System.out.println(commodityList.size());
-%>
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AhaMall</title>
-<link rel="shortcut icon" href="../images/icon/aha64.ico">
-<link href="ec.css" rel="stylesheet" type="text/css">
-<link href="index.css" rel="stylesheet" type="text/css">
-<link href="main.css" rel="stylesheet" type="text/css">
-<link href="style.css" rel="stylesheet" type="text/css">
-<script src="link.js"></script>
-<script src="showDialog.js"></script>
+<link rel="shortcut icon" href="pages/images/icon/aha64.ico">
+<link href="pages/index/ec.css" rel="stylesheet" type="text/css">
+<link href="pages/index/index.css" rel="stylesheet" type="text/css">
+<link href="pages/index/main.css" rel="stylesheet" type="text/css">
+<link href="pages/index/style.css" rel="stylesheet" type="text/css">
+<script src="pages/index/link.js"></script>
+<script src="pages/index/showDialog.js"></script>
 </head>
 <body class="wide" onLoad="load();">
 <div class="header">
     <div class="layout">
         <div class="left">
             <div class="logo">
-            <a href="../index/index.jsp" title="AhaMall">
-            <img src="../images/icon/aha256.png" alt="AhaMall">
+            <a href="IndexServlet" title="AhaMall">
+            <img src="pages/images/icon/aha256.png" alt="AhaMall">
             </a>
             </div>
 				<div class="shortcut">
@@ -109,7 +30,7 @@
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
 				                        <c:if test="${empty sessionScope.userInfo}">
-				                            <a href="../login/login.htm">请登录</a>
+				                            <a href="pages/login/login.htm">请登录</a>
 				                         </c:if>
 				                         <c:if test="${not empty sessionScope.userInfo}">
 				                            ${sessionScope.userInfo.userName}
@@ -121,10 +42,10 @@
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
 				                        <c:if test="${empty sessionScope.userInfo}">
-				                            <a href="../register/register.htm">注册</a>
+				                            <a href="pages/register/register.htm">注册</a>
 				                         </c:if>
 				                         <c:if test="${not empty sessionScope.userInfo}">
-				                            <a href="../index/index.jsp?logout=1">注销</a>
+				                            <a href="IndexServlet?logout=1">注销</a>
 				                         </c:if>
 				                        </div>
 				                    </div>
@@ -133,7 +54,7 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../orders/orders.jsp">我的订单</a>
+				                            <a href="pages/orders/orders.jsp">我的订单</a>
 				                        </div>
 				                        </div>
 				                </li>
@@ -141,8 +62,8 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../shoppingCart/shoppingCart.jsp" class="icon-minicart">
-				                                <span>购物车<span id="header-cart-total" class="hide">(0)</span></span>
+				                            <a href="pages/shoppingCart/shoppingCart.jsp" class="icon-minicart">
+				                                <span>购物车</span>
 				                            </a>
 				                        </div>
 				                    </div>
@@ -220,7 +141,7 @@
 <div class="layout">
 	<c:if test="${empty requestScope.commodityList}">
 		<div class="pro-cate-null">
-			            抱歉，没有找到<span class="red"> <%=fuzzyStr %> </span>的相关商品!
+			            抱歉，没有找到<span class="red"> ${requestScope.fuzzyStr} </span>的相关商品!
 			</div>
 	</c:if>
 	<div id="cart-tips" class="pro-popup-area hide" >
@@ -259,14 +180,14 @@
 				<c:forEach items="${requestScope.commodityList}" var="commodity" >
 				<li>
 					<div class="pro-panels">
-						<p class="p-img"><a  href="../comment/comment.jsp?commodityID=${commodity.commodityID}" 
+						<p class="p-img"><a  href="pages/comment/comment.jsp?commodityID=${commodity.commodityID}" 
 						title="${commodity.commodityDescription}" >
-						<img alt="${commodity.commodityDescription}" src="../images/${commodity.commodityAddressOfImage}"></a></p>
-						<p class="p-name"><a href="../comment/comment.jsp?commodityID=${commodity.commodityID}"
+						<img alt="${commodity.commodityDescription}" src="pages/images/${commodity.commodityAddressOfImage}"></a></p>
+						<p class="p-name"><a href="pages/comment/comment.jsp?commodityID=${commodity.commodityID}"
 						 title="${commodity.commodityDescription}" >${commodity.commodityDescription}<span class="red"></span></a></p>
 						<p class="p-price"><b>¥&nbsp;${commodity.commodityPrice}</b></p>
 						<c:if test="${commodity.commodityIsRecommend == 1}">
-						<b class="p-tag"><img alt="" src="sell.png"></b>
+						<b class="p-tag"><img alt="" src="pages/index/sell.png"></b>
 						</c:if>
 						<div class="p-button clearfix">
 							<table border="1">
@@ -274,7 +195,7 @@
 									<tr>
 									<td>
 									<c:if test="${not empty sessionScope.userInfo}">
-									<a href="<%=url%>commodityID=${commodity.commodityID}&status=1"  class="p-button-cart"><span>加入购物车</span></a>
+									<a href="IndexServlet${requestScope.url}commodityID=${commodity.commodityID}&status=1"  class="p-button-cart"><span>加入购物车</span></a>
 									</c:if>
 									<c:if test="${empty sessionScope.userInfo}">
 									<a href="javascript:;" onclick="return showCartDialog(2);" class="p-button-cart"><span>加入购物车</span></a>

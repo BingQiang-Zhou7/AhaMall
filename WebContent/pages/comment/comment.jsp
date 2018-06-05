@@ -15,7 +15,7 @@
 		if(logout != null && logout.equals("1"))
 		{
 			session.setAttribute("userInfo",null);
-			response.sendRedirect("../index/index.jsp");
+			response.sendRedirect("../../IndexServlet");
 		}
 	}
 	ArrayList<Comment> commentList =null;
@@ -53,7 +53,7 @@
     <div class="layout">
         <div class="left">
             <div class="logo">
-            <a href="../index/index.jsp" title="AhaMall">
+            <a href="../../IndexServlet" title="AhaMall">
             <img src="../images/icon/aha256.png" alt="AhaMall">
             </a>
             </div>

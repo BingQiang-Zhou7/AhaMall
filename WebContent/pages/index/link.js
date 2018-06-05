@@ -83,7 +83,6 @@ function ToCommentPage(commodity) {
 }
 
 
-
 function onClickLink(parameter,type)
 {
 	"use strict";
@@ -91,7 +90,7 @@ function onClickLink(parameter,type)
 	var categoryName = ["全部","手机", "笔记本","平板","智能穿戴", "配件"];
 	var sort = ["sort-0","sort-1","sort-2","sort-3"];
 	var sortName = ["默认","价格","评价数","上架时间"];
-	var url = "index.jsp?";
+	var url = "IndexServlet?";
 	
 	for(var i = 0;i<category.length;i++)
 	{

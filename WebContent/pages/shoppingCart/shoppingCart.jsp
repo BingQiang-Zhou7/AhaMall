@@ -66,7 +66,7 @@
     <div class="layout">
         <div class="left">
             <div class="logo">
-            <a href="../index/index.jsp" title="AhaMall">
+            <a href="../../IndexServlet" title="AhaMall">
             <img src="../images/icon/aha256.png" alt="AhaMall">
             </a>
             </div>
@@ -101,7 +101,7 @@
                 <li>
                     <div class="s-dropdown">
                         <div class="h h-wide" id="header-toolbar-minicart">
-                            <a href="../index/index.jsp">商城主页</a>
+                            <a href="../../IndexServlet">商城主页</a>
                         </div>
                         </div>
                 </li>
@@ -147,7 +147,7 @@
 	<div id="cart-empty-msg" class="sc-empty">
         	<span class="icon-minicart"></span>
             <p>您的购物车里什么也没有哦~</p>
-            <a href="../index/index.jsp">去逛逛</a>
+            <a href="../../IndexServlet">去逛逛</a>
         </div>
 </c:if>
 <c:if test="${not empty requestScope.commodityCart}">

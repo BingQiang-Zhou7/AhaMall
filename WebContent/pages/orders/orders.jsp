@@ -54,7 +54,7 @@
     <div class="layout">
         <div class="left">
             <div class="logo">
-            <a href="../index/index.jsp" title="AhaMall">
+            <a href="../../IndexServlet" title="AhaMall">
             <img src="../images/icon/aha256.png" alt="AhaMall">
             </a>
             </div>
@@ -81,7 +81,7 @@
 				                            <a href="../register/register.htm">注册</a>
 				                         </c:if>
 				                         <c:if test="${not empty sessionScope.userInfo}">
-				                            <a href="../index/index.jsp?logout=1">注销</a>
+				                            <a href="../../IndexServlet?logout=1">注销</a>
 				                         </c:if>
 				                        </div>
 				                    </div>
@@ -89,7 +89,7 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" id="header-toolbar-minicart">
-				                            <a href="../index/index.jsp">商城主页</a>
+				                            <a href="../../IndexServlet">商城主页</a>
 				                        </div>
 				                        </div>
 				                </li>
@@ -134,7 +134,7 @@
 		<c:if test="${empty requestScope.orderList}">
 			<div id="cart-empty-msg" class="sc-empty">
 		            <p>您还没有历史订单哦，去逛逛~</p>
-		            <a href="../index/index.jsp">去逛逛</a>
+		            <a href="../../IndexServlet">去逛逛</a>
 		        </div>
 		 </c:if>
 		<c:if test="${not empty requestScope.orderList}">
