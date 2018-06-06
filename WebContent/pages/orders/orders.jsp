@@ -5,57 +5,24 @@
     pageEncoding="GB18030"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-//获取商品信息
-	String commodityID = request.getParameter("commodityID");
-	User user = (User)session.getAttribute("userInfo");
-	String logout = request.getParameter("logout");
-	if(user != null)
-	{
-	//	System.out.println(logout);
-		if(logout != null && logout.equals("1"))
-		{
-			session.setAttribute("userInfo",null);
-		}
-	}
-	ArrayList<Order> orders = new DataProcess(application.getInitParameter("DBName")).getOrderList(user.phoneNum);
-	
-	
-//	ArrayList<Comment> commentList =null;
-//	request.removeAttribute("commentList");
-//	if(commodityID != null)
-//	{
-//		commentList = new DataProcess(application.getInitParameter("DBName")).getCommentInfo(commodityID);
-//	}
-	//System.out.println(commodityList.size());
-//	if(commentList != null)
-//	{		
-///		for (Comment comment : commentList) {
-//			System.out.println(comment.getCommentConent());
-//			System.out.println(comment.getCommentTime());
-//			System.out.println(comment.getCommodityName());
-//			System.out.println(comment.getUserPhoneNum());
-//			System.out.println("----------------------------------------");
-//		}
-//	}
-	
-	request.setAttribute("orderList", orders);
+
 %>
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AhaMall Orders</title>
-<link rel="shortcut icon" href="../images/icon/aha64.ico">
-<link href="ec.css" rel="stylesheet" type="text/css">
-<link href="main.css" rel="stylesheet" type="text/css">
-<link href="style.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="pages/images/icon/aha64.ico">
+<link href="pages/orders/ec.css" rel="stylesheet" type="text/css">
+<link href="pages/orders/main.css" rel="stylesheet" type="text/css">
+<link href="pages/orders/style.css" rel="stylesheet" type="text/css">
 </head>
 <body class="wide sc">
 <div class="header">
     <div class="layout">
         <div class="left">
             <div class="logo">
-            <a href="../../IndexServlet" title="AhaMall">
-            <img src="../images/icon/aha256.png" alt="AhaMall">
+            <a href="IndexServlet" title="AhaMall">
+            <img src="pages/images/icon/aha256.png" alt="AhaMall">
             </a>
             </div>
 				<div class="shortcut">
@@ -66,7 +33,7 @@
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
 				                        <c:if test="${empty sessionScope.userInfo}">
-				                            <a href="../login/login.htm">请登录</a>
+				                            <a href="pages/login/login.htm">请登录</a>
 				                         </c:if>
 				                         <c:if test="${not empty sessionScope.userInfo}">
 				                            ${sessionScope.userInfo.userName}
@@ -78,10 +45,10 @@
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
 				                        <c:if test="${empty sessionScope.userInfo}">
-				                            <a href="../register/register.htm">注册</a>
+				                            <a href="pages/register/register.htm">注册</a>
 				                         </c:if>
 				                         <c:if test="${not empty sessionScope.userInfo}">
-				                            <a href="../../IndexServlet?logout=1">注销</a>
+				                            <a href="IndexServlet?logout=1">注销</a>
 				                         </c:if>
 				                        </div>
 				                    </div>
@@ -89,14 +56,14 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" id="header-toolbar-minicart">
-				                            <a href="../../IndexServlet">商城主页</a>
+				                            <a href="IndexServlet">商城主页</a>
 				                        </div>
 				                        </div>
 				                </li>
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../shoppingCart/shoppingCart.jsp" class="icon-minicart">
+				                            <a href="ShoppingCartServlet" class="icon-minicart">
 				                                <span>购物车</span>
 				                            </a>
 				                        </div>
@@ -134,7 +101,7 @@
 		<c:if test="${empty requestScope.orderList}">
 			<div id="cart-empty-msg" class="sc-empty">
 		            <p>您还没有历史订单哦，去逛逛~</p>
-		            <a href="../../IndexServlet">去逛逛</a>
+		            <a href="IndexServlet">去逛逛</a>
 		        </div>
 		 </c:if>
 		<c:if test="${not empty requestScope.orderList}">
@@ -156,19 +123,19 @@
 						<tr>
 							<td class="col-pro-img">
 								<p class="p-img">
-								<a title="" href="../comment/comment.jsp?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}">
-									<img class="nocomment-10113020401701" alt="${commodity.commodityDescription}" src="../images/${commodity.commodityAddressOfImage}"></a></p>
+								<a title="" href="CommentServlet?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}">
+									<img class="nocomment-10113020401701" alt="${commodity.commodityDescription}" src="pages/images/${commodity.commodityAddressOfImage}"></a></p>
 								</td>
 							<td class="col-pro-info">
 								<p class="p-name">
-								<a title="${commodity.commodityDescription}" class="nocomment-10113020401701" href="../comment/comment.jsp?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}">${commodity.commodityDescription}</a></p>
+								<a title="${commodity.commodityDescription}" class="nocomment-10113020401701" href="CommentServlet?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}">${commodity.commodityDescription}</a></p>
 							</td>
 							<td class="col-price"><em>¥</em><span>${commodity.commodityPrice}</span></td>
 							<td class="col-quty">${commodity.commodityNumber}</td><td rowspan="1" class="col-pay">
 								<p><em>¥</em><span>${commodity.commodityNumber * commodity.commodityPrice}</span></p></td>
 							<td rowspan="1" class="col-operate" style="color: #ca141d;">
 							<p class="p-button">
-								<a class="button-operate-revie pl-10113020401701" href="../commentCommodity/commentCommodity.jsp?commodityID=${commodity.commodityID}&orderID=${order.orderID}" >
+								<a class="button-operate-revie pl-10113020401701" href="CommentCommodityPageServlet?commodityID=${commodity.commodityID}&orderID=${order.orderID}" >
 								<span>我要评论</span></a>
 							</p>
 							<!-- 

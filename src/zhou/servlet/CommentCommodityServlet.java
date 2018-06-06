@@ -36,7 +36,7 @@ public class CommentCommodityServlet extends HttpServlet {
 //		System.out.println(orderID);
 //		System.out.println(content);
 		new DataProcess(this.getServletContext().getInitParameter("DBName")).CommentCommodity(orderID, content, commodityID);
-		response.sendRedirect("pages/comment/comment.jsp?commodityID="+commodityID);
+		response.sendRedirect("CommentServlet?commodityID="+commodityID);
 	}
 
 	/**

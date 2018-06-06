@@ -1,60 +1,24 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="zhou.database.*"%>
-<%@page import="zhou.dao.*"%>
 <%@ page language="java" contentType="text/html; charset=GB18030"
     pageEncoding="GB18030"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-//获取商品信息
-	String commodityID = request.getParameter("commodityID");
-	User user = (User)session.getAttribute("userInfo");
-	String logout = request.getParameter("logout");
-	if(user != null)
-	{
-	//	System.out.println(logout);
-		if(logout != null && logout.equals("1"))
-		{
-			session.setAttribute("userInfo",null);
-			response.sendRedirect("../../IndexServlet");
-		}
-	}
-	ArrayList<Comment> commentList =null;
-	request.removeAttribute("commentList");
-	if(commodityID != null)
-	{
-		commentList = new DataProcess(application.getInitParameter("DBName")).getCommentInfo(commodityID);
-	}
-	//System.out.println(commodityList.size());
-//	if(commentList != null)
-//	{		
-///		for (Comment comment : commentList) {
-//			System.out.println(comment.getCommentConent());
-//			System.out.println(comment.getCommentTime());
-//			System.out.println(comment.getCommodityName());
-//			System.out.println(comment.getUserPhoneNum());
-//			System.out.println("----------------------------------------");
-//		}
-//	}
-	
-	request.setAttribute("commentList", commentList);
-%>
+
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>AhaMall Comment</title>
-<link rel="shortcut icon" href="../images/icon/aha64.ico">
-<link href="ec.css" rel="stylesheet" type="text/css">
-<link href="main.css" rel="stylesheet" type="text/css">
-<link href="main_002.css" rel="stylesheet" type="text/css">
-<link href="style.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="pages/images/icon/aha64.ico">
+<link href="pages/comment/ec.css" rel="stylesheet" type="text/css">
+<link href="pages/comment/main.css" rel="stylesheet" type="text/css">
+<link href="pages/comment/main_002.css" rel="stylesheet" type="text/css">
+<link href="pages/comment/style.css" rel="stylesheet" type="text/css">
 </head>
 <body class="wide detail" >
 <div class="header">
     <div class="layout">
         <div class="left">
             <div class="logo">
-            <a href="../../IndexServlet" title="AhaMall">
-            <img src="../images/icon/aha256.png" alt="AhaMall">
+            <a href="IndexServlet" title="AhaMall">
+            <img src="pages/images/icon/aha256.png" alt="AhaMall">
             </a>
             </div>
 				<div class="shortcut">
@@ -80,23 +44,25 @@
 				                            <a href="../register/register.htm">注册</a>
 				                         </c:if>
 				                         <c:if test="${not empty sessionScope.userInfo}">
-				                            <a href="../comment/comment.jsp?logout=1">注销</a>
+				                            <a href="CommentServlet?logout=1">注销</a>
 				                         </c:if>
 				                        </div>
 				                    </div>
 				                </li>
+				                <c:if test="${not empty sessionScope.userInfo}">
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../orders/orders.jsp">我的订单</a>
+				                            <a href="OrderServlet">我的订单</a>
 				                        </div>
 				                        </div>
 				                </li>
+				                 </c:if>
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="../shoppingCart/shoppingCart.jsp" class="icon-minicart">
-				                                <span>购物车(<span id="header-cart-total">0</span>)</span>
+				                            <a href="ShoppingCartServlet" class="icon-minicart">
+				                                <span>购物车</span>
 				                            </a>
 				                        </div>
 				                    </div>
@@ -112,7 +78,7 @@
     <div class="shortcut">
     <div class="layout">
             <div class="breadcrumb-area fcn" style="color: #333333; float: left;">
-            <a href="../index/index.jsp">首页</a>&nbsp;&gt;&nbsp;
+            <a href="IndexServlet">首页</a>&nbsp;&gt;&nbsp;
         <span>${commentList[0].commodityName}</span>
     </div>
     </div>
@@ -145,7 +111,7 @@
         <c:forEach items="${requestScope.commentList}" var="comment">
         <li class="clearfix">
         	<div class="product-comment-user"><p class="product-comment-user-img">
-        	<img src="defaultface_user_after.png" alt="defaultface_user_after.png">
+        	<img src="pages/comment/defaultface_user_after.png" alt="defaultface_user_after.png">
         	<i class="icon-vip-level-3"></i></p><p class="product-comment-user-name">${comment.userPhoneNum}</p>
         	</div>
         	<div class="product-user-comment">

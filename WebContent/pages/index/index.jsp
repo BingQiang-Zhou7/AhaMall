@@ -54,7 +54,7 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="pages/orders/orders.jsp">我的订单</a>
+				                            <a href="OrderServlet">我的订单</a>
 				                        </div>
 				                        </div>
 				                </li>
@@ -62,7 +62,7 @@
 				                <li>
 				                    <div class="s-dropdown">
 				                        <div class="h h-wide" >
-				                            <a href="pages/shoppingCart/shoppingCart.jsp" class="icon-minicart">
+				                            <a href="ShoppingCartServlet" class="icon-minicart">
 				                                <span>购物车</span>
 				                            </a>
 				                        </div>
@@ -180,10 +180,10 @@
 				<c:forEach items="${requestScope.commodityList}" var="commodity" >
 				<li>
 					<div class="pro-panels">
-						<p class="p-img"><a  href="pages/comment/comment.jsp?commodityID=${commodity.commodityID}" 
+						<p class="p-img"><a  href="CommentCommodityPageServlet?commodityID=${commodity.commodityID}" 
 						title="${commodity.commodityDescription}" >
 						<img alt="${commodity.commodityDescription}" src="pages/images/${commodity.commodityAddressOfImage}"></a></p>
-						<p class="p-name"><a href="pages/comment/comment.jsp?commodityID=${commodity.commodityID}"
+						<p class="p-name"><a href="CommentCommodityPageServlet?commodityID=${commodity.commodityID}"
 						 title="${commodity.commodityDescription}" >${commodity.commodityDescription}<span class="red"></span></a></p>
 						<p class="p-price"><b>¥&nbsp;${commodity.commodityPrice}</b></p>
 						<c:if test="${commodity.commodityIsRecommend == 1}">

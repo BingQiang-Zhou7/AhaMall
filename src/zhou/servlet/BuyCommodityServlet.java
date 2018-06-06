@@ -47,7 +47,7 @@ public class BuyCommodityServlet extends HttpServlet {
 		//其中时间为当前时间在数据库实现（以用户手机号、订单号以及商品id做传入参数）
 		String orderID = RondomOrderNum.RondomOrderNumber(user.phoneNum);
 		new DataProcess(this.getServletContext().getInitParameter("DBName")).BuyCommodity(orderID, user.phoneNum, commodityIDList);
-		response.sendRedirect("pages/shoppingCart/shoppingCart.jsp");
+		response.sendRedirect("ShoppingCartServlet");
 		//System.out.println("hello");
 	}
 

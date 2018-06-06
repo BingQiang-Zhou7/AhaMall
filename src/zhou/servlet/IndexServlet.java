@@ -53,6 +53,7 @@ public class IndexServlet extends HttpServlet {
 			url+=request.getQueryString()+"&";
 		}
 		request.setAttribute("url", url);
+//		request.getContextPath();
 		
 		// 获取商品信息
 		String categoryName = request.getParameter("categoryName");	
@@ -116,7 +117,7 @@ public class IndexServlet extends HttpServlet {
 //		System.out.println(basePath);
 		
 		
-		request.getRequestDispatcher("pages/index/index.jsp").forward(request, response);;
+		request.getRequestDispatcher("pages/index/index.jsp").forward(request, response);
 	}
 
 	/**

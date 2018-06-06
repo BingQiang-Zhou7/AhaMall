@@ -186,7 +186,7 @@ $(document).ready(
 								  $("#cart-tips").addClass("hide");
 								}
 							  },1000);
-							location.href="../../BuyCommodityServlet?id="+commodity;
+							location.href="BuyCommodityServlet?id="+commodity;
 						}
 					//alert(commodity);
 				 return false;

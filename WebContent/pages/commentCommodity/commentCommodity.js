@@ -19,7 +19,7 @@ $(document).ready(
 				else
 					{
 						$("#commodityTip").addClass("hide");						
-						window.location.href=encodeURI("../../CommentCommodityServlet"+urlParam+"&content="+content);
+						window.location.href=encodeURI("CommentCommodityServlet"+urlParam+"&content="+content);
 					}
 				return false;
 			}
