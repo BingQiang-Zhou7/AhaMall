@@ -93,11 +93,11 @@
                         <li class="clearfix  " id="li-10113020401701">
                         <div class="myEval-pro fl">
                         <p class="p-img">
-                        <a href="CommentServlet?commodityID=${commodity.commodityID}">
+                        <a href="ShowCommodityDetailServlet?commodityID=${commodity.commodityID}">
                         <img id="img-10113020401701" title="${commodity.commodityDescription}" alt="${commodity.commodityDescription}" src="pages/images/${commodity.commodityAddressOfImage}"></a>
                         </p>
                         <p class="p-name" id="name-10113020401701">
-                        <a href="CommentServlet?commodityID=${commodity.commodityID}">${commodity.commodityDescription}</a></p>
+                        <a href="ShowCommodityDetailServlet?commodityID=${commodity.commodityID}">${commodity.commodityDescription}</a></p>
                         <p class="p-price" id="price-10113020401701">¥&nbsp;${commodity.commodityPrice}</p>
                         </div>
                         <div class="myEval-form fr">

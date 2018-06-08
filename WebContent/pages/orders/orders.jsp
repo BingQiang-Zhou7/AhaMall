@@ -123,12 +123,12 @@
 						<tr>
 							<td class="col-pro-img">
 								<p class="p-img">
-								<a title="" href="CommentServlet?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}">
+								<a title="" href="ShowCommodityDetailServlet?commodityID=${commodity.commodityID}">
 									<img class="nocomment-10113020401701" alt="${commodity.commodityDescription}" src="pages/images/${commodity.commodityAddressOfImage}"></a></p>
 								</td>
 							<td class="col-pro-info">
 								<p class="p-name">
-								<a title="${commodity.commodityDescription}" class="nocomment-10113020401701" href="CommentServlet?commodityID=${commodity.commodityID}&commodityName=${commodity.commodityName}">${commodity.commodityDescription}</a></p>
+								<a title="${commodity.commodityDescription}" class="nocomment-10113020401701" href="ShowCommodityDetailServlet?commodityID=${commodity.commodityID}">${commodity.commodityDescription}</a></p>
 							</td>
 							<td class="col-price"><em>¥</em><span>${commodity.commodityPrice}</span></td>
 							<td class="col-quty">${commodity.commodityNumber}</td><td rowspan="1" class="col-pay">

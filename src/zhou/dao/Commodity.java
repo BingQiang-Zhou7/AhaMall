@@ -4,6 +4,7 @@ package zhou.dao;
 public class Commodity {
 	public String commodityID;
 	public String commodityName;
+	public String commodityTitle;
 	public String commodityType;
 	public int commodityPrice;
 	public String commodityAddTime;
@@ -17,12 +18,13 @@ public class Commodity {
 	public String commentTime;
 	public String orderID;
 	
-	public Commodity(String commodityID,String commodityName,String commodityType,int commodityPrice,
+	public Commodity(String commodityID,String commodityTitle,String commodityName,String commodityType,int commodityPrice,
 			String commodityAddTime,String commodityAddressOfImage,String commodityDescription,
 			String commodityNumberOfComment,int commodityIsRecommend,String commodityNumber) 
 	{
 		setCommodityID(commodityID);
 		setCommodityName(commodityName);
+		setCommodityTitle(commodityTitle);
 		setCommodityType(commodityType);
 		setCommodityPrice(commodityPrice);
 		setCommodityAddTime(commodityAddTime);
@@ -35,6 +37,15 @@ public class Commodity {
 	
 	
 	
+	
+	public String getCommodityTitle() {
+		return commodityTitle;
+	}
+
+	public void setCommodityTitle(String commodityTitle) {
+		this.commodityTitle = commodityTitle;
+	}
+
 	public String getCommentContent() {
 		return commentContent;
 	}

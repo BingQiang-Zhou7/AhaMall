@@ -83,24 +83,6 @@
     </div>
     </div>
 		</div>
-
-<!-- 20170519-商品详情-书签-start -->
-<!--
-<div class="product-tab product-tab-top" id="product-tab" style="position: fixed; top: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; width: 100%; z-index: 100;">移到顶部的时候添加class="product-tab-top"
-    <div class="layout relative" id="layoutRelative">
-        <p>
-             <a href="javascript:;" id="pro-tab-feature" class="">商品详情<em></em></a>
-            <a href="javascript:;" id="pro-tab-parameter" class="">规格参数<em></em></a>
-            <a href="javascript:;" id="pro-tab-package-service" style="display: inline;" class="">包装与售后<em></em></a> 
-            <a href="" id="pro-tab-feature" style="float: left;" class="selected">用户评价<em></em><span>(0)用户评论数(TOBE CODE)</span></a>
-        </p>
-    </div>
-</div>
--->
-<!-- 20170519-商品详情-书签-end -->
-
-
-
 <div id="productCommentId" class="layout">
 	<!-- 评价筛选标签 -->
      <div class="product-comment">

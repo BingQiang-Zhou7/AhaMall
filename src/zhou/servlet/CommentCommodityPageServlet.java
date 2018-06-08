@@ -48,7 +48,7 @@ public class CommentCommodityPageServlet extends HttpServlet {
 				session.setAttribute("userInfo",null);
 			}
 		}
-		Commodity commodity = new DataProcess(this.getServletContext().getInitParameter("DBName")).SearchCommodityByID(commodityID,orderID);
+		Commodity commodity = new DataProcess(this.getServletContext().getInitParameter("DBName")).SearchOrderCommodityByID(commodityID,orderID);
 		request.setAttribute("commodity", commodity);
 		
 		

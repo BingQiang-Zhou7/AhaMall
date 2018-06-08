@@ -121,10 +121,14 @@
         				<i class="icon-choose-normal icon-choose ${commodity.commodityID}"></i>
         				<div class="sc-pro-area ">
         					<div class="sc-pro-main clearfix">
+        					<a href="ShowCommodityDetailServlet?commodityID=${commodity.commodityID}">
         							<img class="p-img" alt="${commodity.commodityDescription}" src="pages/images/${commodity.commodityAddressOfImage}">
+        							</a>
         						<ul>            
-        							<li>            
-        								<p class="p-name">${commodity.commodityDescription}</p>                
+        							<li> 
+        							<a href="ShowCommodityDetailServlet?commodityID=${commodity.commodityID}">           
+        								${commodity.commodityDescription}               
+        								</a> 
         								<!-- <p class="p-sku" style="display: none;">
         									<em>版本：全网通&nbsp;6GB+64GB</em>
         									<em>颜色：幻影蓝</em>

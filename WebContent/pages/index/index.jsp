@@ -180,10 +180,10 @@
 				<c:forEach items="${requestScope.commodityList}" var="commodity" >
 				<li>
 					<div class="pro-panels">
-						<p class="p-img"><a  href="CommentCommodityPageServlet?commodityID=${commodity.commodityID}" 
+						<p class="p-img"><a  href="ShowCommodityDetailServlet?commodityID=${commodity.commodityID}" 
 						title="${commodity.commodityDescription}" >
 						<img alt="${commodity.commodityDescription}" src="pages/images/${commodity.commodityAddressOfImage}"></a></p>
-						<p class="p-name"><a href="CommentCommodityPageServlet?commodityID=${commodity.commodityID}"
+						<p class="p-name"><a href="ShowCommodityDetailServlet?commodityID=${commodity.commodityID}"
 						 title="${commodity.commodityDescription}" >${commodity.commodityDescription}<span class="red"></span></a></p>
 						<p class="p-price"><b>¥&nbsp;${commodity.commodityPrice}</b></p>
 						<c:if test="${commodity.commodityIsRecommend == 1}">
@@ -201,7 +201,12 @@
 									<a href="javascript:;" onclick="return showCartDialog(2);" class="p-button-cart"><span>加入购物车</span></a>
 									</c:if>
 									</td>
-										<td><label class="p-button-score"><span id="numOfComment">${commodity.commodityNumberOfComment}</span>人评价</label></td>
+										<td>
+										<a href="CommentServlet?commodityID=${commodity.commodityID}">
+										<label class="p-button-score">
+										<span id="numOfComment">${commodity.commodityNumberOfComment}
+										</span>人评价</label>
+										</a></td>
 									</tr>
 								</tbody>
 							</table>

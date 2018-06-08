@@ -24,7 +24,7 @@ public class DataProcess {
 		try {
 			while (resultSet.next()) {
 				commodityList.add(
-						new Commodity(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+						new Commodity(resultSet.getString("id"), resultSet.getString("title"),resultSet.getString("name"), resultSet.getString("type"), 
 								resultSet.getInt("price"), resultSet.getString("addedTime"), resultSet.getString("addressofimage"), 
 								resultSet.getString("description"),resultSet.getString("numofcomment"),resultSet.getInt("isRecommend"),"0"));
 			}
@@ -78,7 +78,7 @@ public class DataProcess {
 		try {
 			while (resultSet.next()) {
 				commodityList.add(
-						new Commodity(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+						new Commodity(resultSet.getString("id"),resultSet.getString("title"), resultSet.getString("name"), resultSet.getString("type"), 
 								resultSet.getInt("price"), resultSet.getString("addedTime"), resultSet.getString("addressofimage"), 
 								resultSet.getString("description"),resultSet.getString("numofcomment"),resultSet.getInt("isRecommend"),resultSet.getString("numOfCommodity")));
 			}
@@ -142,7 +142,7 @@ public class DataProcess {
 					if(order.getOrderID().equals(orderID))
 					{
 						orderList.get(orderList.indexOf(order)).commodities.add(
-								new Commodity(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+								new Commodity(resultSet.getString("id"),resultSet.getString("title"), resultSet.getString("name"), resultSet.getString("type"), 
 										resultSet.getInt("price"), resultSet.getString("addedTime"), resultSet.getString("addressofimage"), 
 										resultSet.getString("description"),resultSet.getString("numofcomment"),
 										resultSet.getInt("isRecommend"),resultSet.getString("numberOfCommodity")));
@@ -153,7 +153,7 @@ public class DataProcess {
 				if (hasOrder == false) {
 					Order orders = new Order(resultSet.getString("buytime"),resultSet.getString("orderID"));
 					orders.commodities.add(
-							new Commodity(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+							new Commodity(resultSet.getString("id"),resultSet.getString("title"), resultSet.getString("name"), resultSet.getString("type"), 
 									resultSet.getInt("price"), resultSet.getString("addedTime"), resultSet.getString("addressofimage"), 
 									resultSet.getString("description"),resultSet.getString("numofcomment"),
 									resultSet.getInt("isRecommend"),resultSet.getString("numberOfCommodity")));
@@ -182,15 +182,15 @@ public class DataProcess {
 		closeConnect();
 	}
 	
-	//查找商品信息通过商品ID
-	public Commodity SearchCommodityByID(String commodityID,String orderID) {
+	//查找订单中商品信息通过商品ID
+	public Commodity SearchOrderCommodityByID(String commodityID,String orderID) {
 		Object[] parameter = new Object[] {commodityID,orderID};
-		ResultSet resultSet = dataAccess.DatabaseOperations("call SearchCommodityByID(?,?)", parameter);
+		ResultSet resultSet = dataAccess.DatabaseOperations("call SearchOrderCommodityByID(?,?)", parameter);
 		Commodity commodity = null;
 		try {
 			while (resultSet.next()) {
 				commodity =
-						new Commodity(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+						new Commodity(resultSet.getString("id"),resultSet.getString("title"), resultSet.getString("name"), resultSet.getString("type"), 
 								resultSet.getInt("price"), resultSet.getString("addedTime"), resultSet.getString("addressofimage"), 
 								resultSet.getString("description"),resultSet.getString("numofcomment"),
 								resultSet.getInt("isRecommend"),resultSet.getString("numberOfCommodity"));
@@ -201,6 +201,50 @@ public class DataProcess {
 			resultSet.close();
 			closeConnect();
 			return commodity;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Commodity SearchCommodityByID(String commodityID) {
+		Object[] parameter = new Object[] {commodityID};
+		ResultSet resultSet = dataAccess.DatabaseOperations("call SearchCommodityByID(?)", parameter);
+		Commodity commodity = null;
+		try {
+			while (resultSet.next()) {
+				commodity =
+						new Commodity(resultSet.getString("id"),resultSet.getString("title"), resultSet.getString("name"), resultSet.getString("type"), 
+								resultSet.getInt("price"), resultSet.getString("addedTime"), resultSet.getString("addressofimage"), 
+								resultSet.getString("description"),resultSet.getString("numofcomment"),
+								resultSet.getInt("isRecommend"),"0");
+			}
+			resultSet.close();
+			closeConnect();
+			return commodity;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ArrayList<Commodity> getRecommendCommodityInfo(String commodityID) {
+		Object[] parameter = new Object[] {commodityID};
+		ResultSet resultSet = dataAccess.DatabaseOperations("call SearchRecommendCommodity(?)", parameter);
+		ArrayList<Commodity> commodityList = new ArrayList<Commodity>();
+		try {
+			while (resultSet.next()) {
+				commodityList.add(
+						new Commodity(resultSet.getString("id"), resultSet.getString("title"),resultSet.getString("name"), resultSet.getString("type"), 
+								resultSet.getInt("price"), resultSet.getString("addedTime"), resultSet.getString("addressofimage"), 
+								resultSet.getString("description"),resultSet.getString("numofcomment"),resultSet.getInt("isRecommend"),"0"));
+			}
+			resultSet.close();
+			closeConnect();
+			if (commodityList.size() == 0) {
+				return null;
+			}
+			return commodityList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -264,39 +308,37 @@ public class DataProcess {
 //		commodityList.add("apple_004");
 //		new DataProcess("AhaMall").BuyCommodity("123456", "13312341234", commodityList);
 		
-		ArrayList<Order> orders = new DataProcess("AhaMall").getOrderList("13312341234");
-		for (Order order : orders) {
-			System.out.println(order.getOrderID());
-			System.out.println(order.getPayTime());
-			for (Commodity commodity : order.commodities) {
-				System.out.println(commodity.getCommodityID());
-				System.out.println(commodity.getCommodityName());
-				System.out.println(commodity.getCommodityType());
-				System.out.println(commodity.getCommodityPrice());
-				System.out.println(commodity.getCommodityAddressOfImage());
-				System.out.println(commodity.getCommodityNumberOfComment());
-				System.out.println(commodity.getCommodityAddTime());
-				System.out.println(commodity.getCommodityDescription());
-				System.out.println(commodity.getCommodityIsRecommend());
-				System.out.println(commodity.getCommodityNumber());
-				System.out.println("----------------------------------------");
-			}
-		}
+//		ArrayList<Order> orders = new DataProcess("AhaMall").getOrderList("13312341234");
+//		for (Order order : orders) {
+//			System.out.println(order.getOrderID());
+//			System.out.println(order.getPayTime());
+//			for (Commodity commodity : order.commodities) {
+//				System.out.println(commodity.getCommodityID());
+//				System.out.println(commodity.getCommodityName());
+//				System.out.println(commodity.getCommodityType());
+//				System.out.println(commodity.getCommodityPrice());
+//				System.out.println(commodity.getCommodityAddressOfImage());
+//				System.out.println(commodity.getCommodityNumberOfComment());
+//				System.out.println(commodity.getCommodityAddTime());
+//				System.out.println(commodity.getCommodityDescription());
+//				System.out.println(commodity.getCommodityIsRecommend());
+//				System.out.println(commodity.getCommodityNumber());
+//				System.out.println("----------------------------------------");
+//			}
+//		}
 		
-//		Commodity commodity = new DataProcess("AhaMall").SearchCommodityByID("apple_001","115281026920103312341234");
-//		
-//			System.out.println(commodity.getCommodityID());
-//			System.out.println(commodity.getCommodityName());
-//			System.out.println(commodity.getCommodityType());
-//			System.out.println(commodity.getCommodityPrice());
-//			System.out.println(commodity.getCommodityAddressOfImage());
-//			System.out.println(commodity.getCommodityNumberOfComment());
-//			System.out.println(commodity.getCommodityAddTime());
-//			System.out.println(commodity.getCommodityDescription());
-//			System.out.println(commodity.getCommodityIsRecommend());
-//			System.out.println(commodity.getCommentContent());
-//			System.out.println(commodity.getCommentTime());
-//			System.out.println(commodity.getOrderID());
-//			System.out.println("----------------------------------------");
+		Commodity commodity = new DataProcess("AhaMall").SearchCommodityByID("apple_001");
+		
+			System.out.println(commodity.getCommodityID());
+			System.out.println(commodity.getCommodityName());
+			System.out.println(commodity.getCommodityType());
+			System.out.println(commodity.getCommodityPrice());
+			System.out.println(commodity.getCommodityAddressOfImage());
+			System.out.println(commodity.getCommodityNumberOfComment());
+			System.out.println(commodity.getCommodityAddTime());
+			System.out.println(commodity.getCommodityDescription());
+			System.out.println(commodity.getCommodityIsRecommend());
+			System.out.println(commodity.getCommodityTitle());
+			System.out.println("----------------------------------------");
 	}
 }
