@@ -45,7 +45,7 @@
 	                            <a href="pages/register/register.htm">×¢²á</a>
 	                         </c:if>
 	                         <c:if test="${not empty sessionScope.userInfo}">
-	                            <a href="shoppingCartServlet?logout=1">×¢Ïú</a>
+	                            <a href="ShoppingCartServlet?logout=1">×¢Ïú</a>
 	                         </c:if>
                         </div>
                     </div>
