@@ -112,7 +112,9 @@
    		 </c:if>
 </ul>
 		<c:if test="${empty requestScope.commentList}">
-        	<div class="product-comment-no" id="product-remark-comment-no" style="font-size: 20px;">该商品暂无评价</div>
+      	     <div class="product-comment">
+      			<div class="product-comment-no" id="product-remark-comment-no" style="display: block;">该商品暂无评价</div>
+  			</div> 
         </c:if>
     </div>
 </div>        
